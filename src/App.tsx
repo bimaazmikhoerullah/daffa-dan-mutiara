@@ -247,8 +247,22 @@ export default function App() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const updateCanvasSize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    updateCanvasSize();
 
     const mouse = { x: -1000, y: -1000, vx: 0, vy: 0, lastX: 0, lastY: 0 };
 
@@ -269,8 +283,7 @@ export default function App() {
     };
 
     const handleResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      updateCanvasSize();
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -609,7 +622,7 @@ export default function App() {
   };
 
   return (
-    <div className="font-body text-slate-800 bg-[#f4f8fc] overflow-x-hidden selection:bg-powderBlue selection:text-midnight relative">
+    <div className="font-body text-slate-800 bg-[#f4f8fc] overflow-x-clip selection:bg-powderBlue selection:text-midnight relative min-h-dvh">
       {/* BEGIN: Ambient Romantic Falling Floral Petals & Sparkle Canvas */}
       <canvas ref={canvasRef} aria-hidden="true" id="petals-canvas" />
       {/* END: Ambient Romantic Falling Floral Petals & Sparkle Canvas */}
@@ -617,7 +630,7 @@ export default function App() {
       {/* BEGIN: Floating Botanical Corner Accents (Fixed Ambient Overlay) */}
       <div
         aria-hidden="true"
-        className="fixed top-0 left-0 pointer-events-none z-30 w-48 sm:w-64 md:w-80 animate-floral-left opacity-90 drop-shadow-md"
+        className="fixed top-0 left-0 pointer-events-none z-30 w-28 sm:w-48 md:w-64 lg:w-80 animate-floral-left opacity-90 drop-shadow-md"
       >
         <svg className="w-full h-auto filter drop-shadow-sm" fill="none" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
           <path d="M-20 -20 C60 10, 110 70, 150 140 C120 110, 70 80, -20 60 Z" fill="#8fa8cf" fillOpacity="0.3" />
@@ -634,7 +647,7 @@ export default function App() {
       </div>
       <div
         aria-hidden="true"
-        className="fixed top-0 right-0 pointer-events-none z-30 w-48 sm:w-64 md:w-80 animate-floral-right opacity-90 drop-shadow-md"
+        className="fixed top-0 right-0 pointer-events-none z-30 w-28 sm:w-48 md:w-64 lg:w-80 animate-floral-right opacity-90 drop-shadow-md"
       >
         <svg className="w-full h-auto filter drop-shadow-sm" fill="none" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
           <path d="M280 -20 C200 10, 150 70, 110 140 C140 110, 190 80, 280 60 Z" fill="#8fa8cf" fillOpacity="0.3" />
@@ -660,10 +673,13 @@ export default function App() {
       </div>
 
       {/* BEGIN: Audio Controller Widget */}
-      <aside className="fixed bottom-6 right-6 z-50 flex items-center gap-3" data-purpose="audio-controller">
+      <aside
+        className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-50 flex items-center gap-3"
+        data-purpose="audio-controller"
+      >
         <button
           aria-label={isPlaying ? 'Jeda Musik Undangan' : 'Putar Musik Undangan'}
-          className={`relative group p-3.5 bg-midnight/90 text-powderBlue rounded-full shadow-2xl border border-powderBlue/50 hover:bg-steelBlue transition-all duration-300 hover:scale-110 flex items-center justify-center cursor-pointer ${
+          className={`relative group p-3.5 min-w-[48px] min-h-[48px] bg-midnight/90 text-powderBlue rounded-full shadow-2xl border border-powderBlue/50 hover:bg-steelBlue transition-all duration-300 hover:scale-110 flex items-center justify-center cursor-pointer ${
             isPlaying ? 'card-aura-glow' : ''
           }`}
           id="musicToggleBtn"
@@ -698,7 +714,7 @@ export default function App() {
       {/* TAMPILAN 1: Hero Cover Section */}
       {!isInvitationOpen && (
       <header
-        className={`relative min-h-dvh flex items-center justify-center text-center px-4 overflow-hidden bg-gradient-to-b from-midnight via-[#183a66] to-steelBlue text-white transition-all duration-500 ease-out ${
+        className={`fixed inset-0 z-20 min-h-dvh flex items-center justify-center text-center px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain bg-gradient-to-b from-midnight via-[#183a66] to-steelBlue text-white transition-all duration-500 ease-out ${
           isOpening ? 'opacity-0 scale-105' : 'opacity-100 scale-100'
         }`}
         id="cover"
@@ -710,49 +726,49 @@ export default function App() {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-powderBlue/25 via-transparent to-black/50" />
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-powderBlue/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-cornflower/25 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute w-[500px] h-[500px] rounded-full border border-powderBlue/20 border-dashed animate-spin-slow pointer-events-none hidden md:block" />
-        <div className="absolute w-[620px] h-[620px] rounded-full border border-white/10 pointer-events-none hidden md:block" />
-        <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center py-10 sm:py-16 animate-soft-float">
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-powderBlue/50 bg-midnight/70 backdrop-blur-md text-powderBlue text-xs uppercase tracking-widest mb-4 sm:mb-6 shadow-lg">
+        <div className="fixed inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-powderBlue/25 via-transparent to-black/50 pointer-events-none" />
+        <div className="fixed -top-24 -left-24 w-72 sm:w-96 h-72 sm:h-96 bg-powderBlue/20 rounded-full blur-3xl animate-pulse pointer-events-none" />
+        <div className="fixed -bottom-24 -right-24 w-72 sm:w-96 h-72 sm:h-96 bg-cornflower/25 rounded-full blur-3xl animate-pulse pointer-events-none" />
+        <div className="fixed w-[500px] h-[500px] rounded-full border border-powderBlue/20 border-dashed animate-spin-slow pointer-events-none hidden md:block" />
+        <div className="fixed w-[620px] h-[620px] rounded-full border border-white/10 pointer-events-none hidden md:block" />
+        <div className="relative z-10 w-full max-w-3xl mx-auto my-auto flex flex-col items-center py-6 sm:py-12 animate-soft-float">
+          <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full border border-powderBlue/50 bg-midnight/70 backdrop-blur-md text-powderBlue text-[11px] sm:text-xs uppercase tracking-widest mb-4 sm:mb-6 shadow-lg">
             <span className="w-2 h-2 rounded-full bg-powderBlue animate-ping" />
             <span>The Wedding Celebration</span>
           </div>
-          <h1 className="font-script text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-powderBlue to-white my-2 sm:my-3 drop-shadow-lg tracking-wide hover:scale-105 transition-transform duration-700">
+          <h1 className="font-script text-[clamp(3.25rem,11vw,6rem)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-powderBlue to-white my-1.5 sm:my-3 drop-shadow-lg tracking-wide hover:scale-105 transition-transform duration-700">
             M &amp; D
           </h1>
-          <p className="font-light text-slate-200 max-w-xl mx-auto text-sm md:text-base leading-relaxed my-3 sm:my-4 italic drop-shadow-sm">
+          <p className="font-light text-slate-200 max-w-xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed my-2.5 sm:my-4 px-2 italic drop-shadow-sm">
             &quot;Dan diantara tanda-tanda kekuasaan-Nya adalah diciptakannya untukmu pasangan hidup dari jenismu sendiri supaya kamu merasa tentram disampingnya dan dijadikannya kasih sayang diantara kamu. Sesungguhnya yang demikian itu menjadi tanda kebesaran Allah bagi orang yang berpikir&quot;
-            <span className="block text-xs not-italic text-powderBlue mt-2 font-serifHeading tracking-wider">
+            <span className="block text-[11px] sm:text-xs not-italic text-powderBlue mt-2 font-serifHeading tracking-wider">
               (QS. Ar Ruum : 21)
             </span>
           </p>
 
           {/* Countdown Component with Neon Aura */}
-          <div className="grid grid-cols-4 gap-2.5 md:gap-4 my-5 sm:my-8 text-center w-full max-w-md" data-purpose="countdown-container">
-            <div className="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
-              <span className="block text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue transition-all duration-300 drop-shadow" id="days">
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 my-4 sm:my-7 text-center w-full max-w-sm sm:max-w-md" data-purpose="countdown-container">
+            <div className="glass-card-dark p-2.5 sm:p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+              <span className="block text-xl sm:text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue tabular-nums transition-all duration-300 drop-shadow" id="days">
                 {countdown.days}
               </span>
               <span className="text-[10px] md:text-xs tracking-wider uppercase text-iceBlue font-medium">Hari</span>
             </div>
-            <div className="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
-              <span className="block text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue transition-all duration-300 drop-shadow" id="hours">
+            <div className="glass-card-dark p-2.5 sm:p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+              <span className="block text-xl sm:text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue tabular-nums transition-all duration-300 drop-shadow" id="hours">
                 {countdown.hours}
               </span>
               <span className="text-[10px] md:text-xs tracking-wider uppercase text-iceBlue font-medium">Jam</span>
             </div>
-            <div className="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
-              <span className="block text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue transition-all duration-300 drop-shadow" id="minutes">
+            <div className="glass-card-dark p-2.5 sm:p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+              <span className="block text-xl sm:text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue tabular-nums transition-all duration-300 drop-shadow" id="minutes">
                 {countdown.minutes}
               </span>
               <span className="text-[10px] md:text-xs tracking-wider uppercase text-iceBlue font-medium">Menit</span>
             </div>
-            <div className="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+            <div className="glass-card-dark p-2.5 sm:p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
               <span
-                className={`block text-2xl md:text-3xl font-bold font-serifHeading transition-all duration-300 drop-shadow ${
+                className={`block text-xl sm:text-2xl md:text-3xl font-bold font-serifHeading tabular-nums transition-all duration-300 drop-shadow ${
                   secFlash ? 'text-white scale-110' : 'text-powderBlue'
                 }`}
                 id="seconds"
@@ -765,15 +781,15 @@ export default function App() {
 
           {/* Action Button to enter View 2 */}
           <button
-            className="btn-interactive pulse-glow mt-4 inline-flex items-center gap-3 px-8 py-3.5 bg-gradient-to-r from-steelBlue to-midnight border border-powderBlue/70 text-white rounded-full font-medium tracking-wide shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
+            className="btn-interactive pulse-glow mt-3 sm:mt-4 inline-flex items-center justify-center gap-3 px-7 sm:px-8 py-3.5 min-h-[48px] bg-gradient-to-r from-steelBlue to-midnight border border-powderBlue/70 text-white rounded-full text-sm sm:text-base font-medium tracking-wide shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
             onClick={handleOpenInvitation}
             type="button"
           >
-            <svg className="w-5 h-5 fill-current text-powderBlue animate-bounce" viewBox="0 0 20 20">
+            <svg className="w-5 h-5 fill-current text-powderBlue animate-bounce shrink-0" viewBox="0 0 20 20">
               <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
               <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
             </svg>
-            <span className="tracking-wider">Buka Undangan</span>
+            <span className="tracking-wider whitespace-nowrap">Buka Undangan</span>
           </button>
         </div>
       </header>
@@ -785,16 +801,16 @@ export default function App() {
       <div className="animate-fade-in-view">
       <main className="relative z-10">
         {/* BEGIN: Couple Profile Section */}
-        <section className="py-24 px-4 max-w-6xl mx-auto relative overflow-hidden" id="couple">
+        <section className="py-16 sm:py-24 px-4 max-w-6xl mx-auto relative overflow-hidden" id="couple">
           {/* Section Wind Breeze Botanical Ornaments (Left & Right) */}
-          <div aria-hidden="true" className="absolute -left-12 top-16 w-36 md:w-48 opacity-45 pointer-events-none animate-floral-left">
+          <div aria-hidden="true" className="absolute -left-12 top-16 w-28 sm:w-36 md:w-48 opacity-45 pointer-events-none animate-floral-left">
             <svg className="w-full h-auto text-steelBlue" fill="none" viewBox="0 0 100 100">
               <path d="M10 90 Q30 40 85 20 Q50 65 10 90" fill="#A2BEE2" fillOpacity="0.3" />
               <path d="M15 85 C35 60 65 50 80 25 C60 50 40 75 15 85 Z" fill="#fbcfe8" fillOpacity="0.4" />
               <circle cx="85" cy="20" fill="#e3be77" r="4" />
             </svg>
           </div>
-          <div aria-hidden="true" className="absolute -right-12 bottom-12 w-36 md:w-48 opacity-45 pointer-events-none animate-floral-right">
+          <div aria-hidden="true" className="absolute -right-12 bottom-12 w-28 sm:w-36 md:w-48 opacity-45 pointer-events-none animate-floral-right">
             <svg className="w-full h-auto text-steelBlue" fill="none" viewBox="0 0 100 100">
               <path d="M90 90 Q70 40 15 20 Q50 65 90 90" fill="#8fa8cf" fillOpacity="0.3" />
               <path d="M85 85 C65 60 35 50 20 25 C40 50 60 75 85 85 Z" fill="#fbcfe8" fillOpacity="0.4" />
@@ -802,11 +818,11 @@ export default function App() {
             </svg>
           </div>
 
-          <div className="text-center mb-16 reveal-item">
+          <div className="text-center mb-12 sm:mb-16 reveal-item">
             <p className="text-xs md:text-sm font-semibold tracking-widest text-steelBlue uppercase">
               Maha suci Allah SWT, yang telah menciptakan makhluk-Nya berpasang-pasangan
             </p>
-            <h2 className="font-serifHeading text-3xl md:text-4xl text-midnight font-bold mt-2">
+            <h2 className="font-serifHeading text-2xl sm:text-3xl md:text-4xl text-midnight font-bold mt-2">
               Mempelai Bahagia
             </h2>
             <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-4 rounded-full" />
@@ -815,13 +831,13 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
             {/* Bride Card (Mutiara) with Shimmer Border Wrapper & Pulsing Rings */}
             <div className="reveal-item">
               <div className="p-[1.5px] rounded-3xl shimmer-border-box shadow-xl animate-card-float">
-                <article className="glass-card card-aura-glow rounded-3xl p-8 text-center relative overflow-hidden group">
+                <article className="glass-card card-aura-glow rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden group">
                   <div className="absolute -top-12 -right-12 w-32 h-32 bg-powderBlue/25 rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-all duration-700" />
-                  <div className="relative w-48 h-48 mx-auto mb-6">
+                  <div className="relative w-36 h-36 sm:w-48 sm:h-48 mx-auto mb-5 sm:mb-6">
                     {/* Dual Glowing Dynamic Aura Rings */}
                     <div className="absolute -inset-3 rounded-full avatar-glow-ring pointer-events-none" />
                     <div className="absolute inset-0 rounded-full border-2 border-dashed border-steelBlue animate-spin-slow" />
@@ -834,7 +850,7 @@ export default function App() {
                       style={{ objectFit: 'cover', objectPosition: 'center center' }}
                     />
                   </div>
-                  <h3 className="font-serifHeading text-2xl font-bold text-midnight group-hover:text-steelBlue transition-colors">
+                  <h3 className="font-serifHeading text-xl sm:text-2xl font-bold text-midnight group-hover:text-steelBlue transition-colors">
                     Mutiara Afdelani
                   </h3>
                   <p className="text-xs uppercase tracking-wider text-steelBlue font-semibold mt-1">
@@ -845,7 +861,7 @@ export default function App() {
                   <div className="flex justify-center gap-3 mt-6">
                     <a
                       aria-label="Instagram Mutiara"
-                      className="btn-interactive p-2.5 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm"
+                      className="btn-interactive p-3 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center"
                       href="#"
                     >
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -863,9 +879,9 @@ export default function App() {
                 className="p-[1.5px] rounded-3xl shimmer-border-box shadow-xl animate-card-float"
                 style={{ animationDelay: '1.5s' }}
               >
-                <article className="glass-card card-aura-glow rounded-3xl p-8 text-center relative overflow-hidden group">
+                <article className="glass-card card-aura-glow rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden group">
                   <div className="absolute -top-12 -left-12 w-32 h-32 bg-steelBlue/25 rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-all duration-700" />
-                  <div className="relative w-48 h-48 mx-auto mb-6">
+                  <div className="relative w-36 h-36 sm:w-48 sm:h-48 mx-auto mb-5 sm:mb-6">
                     {/* Dual Glowing Dynamic Aura Rings */}
                     <div
                       className="absolute -inset-3 rounded-full avatar-glow-ring pointer-events-none"
@@ -880,7 +896,7 @@ export default function App() {
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYQRBYQo2djIeByydCGNk9r5K2jOAamzl6hpwZUN2dtW5jlU-WJ_NH_5MVIxbnwdKfxM5jmNg4yIfTd5qtkYPTgNWnEDnY9vKE2y2B7S6PpnqOaTBfHGKJMAniE1U1ezGnqMKVVWubKN7YNBDmL4Glr61EWDxeo-UWqhIY4eaEocDmoQ3HWbKBSmgblNUkyXULyApUiyquYVtH6RDrSBZ57DSBdUKmdVTJHN8xEji6mAwaf0XiLib4Rw"
                     />
                   </div>
-                  <h3 className="font-serifHeading text-2xl font-bold text-midnight group-hover:text-steelBlue transition-colors">
+                  <h3 className="font-serifHeading text-xl sm:text-2xl font-bold text-midnight group-hover:text-steelBlue transition-colors">
                     Daffa Aria Gunawan
                   </h3>
                   <p className="text-xs uppercase tracking-wider text-steelBlue font-semibold mt-1">
@@ -893,7 +909,7 @@ export default function App() {
                   <div className="flex justify-center gap-3 mt-6">
                     <a
                       aria-label="Instagram Daffa"
-                      className="btn-interactive p-2.5 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm"
+                      className="btn-interactive p-3 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center"
                       href="#"
                     >
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -909,31 +925,31 @@ export default function App() {
         {/* END: Couple Profile Section */}
 
         {/* BEGIN: Love Story Timeline Section */}
-        <section className="py-20 bg-gradient-to-b from-[#f4f8fc] via-softSky/60 to-[#f4f8fc] px-4 relative overflow-hidden">
+        <section className="py-16 sm:py-20 bg-gradient-to-b from-[#f4f8fc] via-softSky/60 to-[#f4f8fc] px-4 relative overflow-hidden">
           {/* Swaying Botanical Vector Overlay on Edges */}
-          <div aria-hidden="true" className="absolute -left-8 top-1/4 w-32 md:w-44 opacity-40 pointer-events-none animate-floral-left">
+          <div aria-hidden="true" className="absolute -left-8 top-1/4 w-28 sm:w-32 md:w-44 opacity-40 pointer-events-none animate-floral-left">
             <svg className="w-full h-auto" fill="none" viewBox="0 0 120 120">
               <path d="M0 60 C30 20 70 30 110 10 C80 50 60 90 0 60 Z" fill="#A2BEE2" fillOpacity="0.35" />
               <circle cx="110" cy="10" fill="#fbcfe8" r="5" />
             </svg>
           </div>
-          <div aria-hidden="true" className="absolute -right-8 top-1/2 w-32 md:w-44 opacity-40 pointer-events-none animate-floral-right">
+          <div aria-hidden="true" className="absolute -right-8 top-1/2 w-28 sm:w-32 md:w-44 opacity-40 pointer-events-none animate-floral-right">
             <svg className="w-full h-auto" fill="none" viewBox="0 0 120 120">
               <path d="M120 60 C90 20 50 30 10 10 C40 50 60 90 120 60 Z" fill="#8fa8cf" fillOpacity="0.35" />
               <circle cx="10" cy="10" fill="#e3be77" r="5" />
             </svg>
           </div>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16 reveal-item">
-              <p className="text-sm font-semibold tracking-widest text-steelBlue uppercase">Perjalanan Kasih</p>
-              <h2 className="font-serifHeading text-3xl font-bold text-midnight">Kisah Cinta Kami</h2>
+            <div className="text-center mb-12 sm:mb-16 reveal-item">
+              <p className="text-xs sm:text-sm font-semibold tracking-widest text-steelBlue uppercase">Perjalanan Kasih</p>
+              <h2 className="font-serifHeading text-2xl sm:text-3xl font-bold text-midnight">Kisah Cinta Kami</h2>
               <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3" />
             </div>
             {/* Timeline with Flowing Shimmer Light Beam */}
-            <div className="relative border-l-2 border-powderBlue/70 ml-4 md:ml-32 space-y-12">
+            <div className="relative border-l-2 border-powderBlue/70 ml-3 sm:ml-4 md:ml-32 space-y-8 sm:space-y-12">
               <div className="timeline-shimmer-beam" />
               {/* Story Event 1 */}
-              <div className="relative pl-8 group reveal-item">
+              <div className="relative pl-6 sm:pl-8 group reveal-item">
                 <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-steelBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300 animate-ping opacity-75" />
                 <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-steelBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300" />
                 <div className="glass-card card-aura-glow p-6 rounded-2xl shadow-sm hover:shadow-md transition">
@@ -945,13 +961,13 @@ export default function App() {
                 </div>
               </div>
               {/* Story Event 2 */}
-              <div className="relative pl-8 group reveal-item">
+              <div className="relative pl-6 sm:pl-8 group reveal-item">
                 <span
                   className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-powderBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300 animate-ping opacity-75"
                   style={{ animationDelay: '1.2s' }}
                 />
                 <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-powderBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300" />
-                <div className="glass-card card-aura-glow p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+                <div className="glass-card card-aura-glow p-5 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition">
                   <span className="text-xs font-semibold text-cornflower uppercase tracking-wider">Komitmen Hati</span>
                   <h4 className="font-serifHeading text-lg font-bold text-midnight mt-1">Menjalin Hubungan</h4>
                   <p className="text-slate-600 text-sm mt-2 leading-relaxed">
@@ -960,13 +976,13 @@ export default function App() {
                 </div>
               </div>
               {/* Story Event 3 */}
-              <div className="relative pl-8 group reveal-item">
+              <div className="relative pl-6 sm:pl-8 group reveal-item">
                 <span
                   className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-midnight border-4 border-white shadow group-hover:scale-125 transition-transform duration-300 animate-ping opacity-75"
                   style={{ animationDelay: '2s' }}
                 />
                 <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-midnight border-4 border-white shadow group-hover:scale-125 transition-transform duration-300" />
-                <div className="glass-card card-aura-glow p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+                <div className="glass-card card-aura-glow p-5 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition">
                   <span className="text-xs font-semibold text-cornflower uppercase tracking-wider">Menuju Halal</span>
                   <h4 className="font-serifHeading text-lg font-bold text-midnight mt-1">Menuju Hari Bahagia</h4>
                   <p className="text-slate-600 text-sm mt-2 leading-relaxed">
@@ -980,25 +996,25 @@ export default function App() {
         {/* END: Love Story Timeline Section */}
 
         {/* BEGIN: Events Schedule Section */}
-        <section className="py-24 px-4 max-w-5xl mx-auto relative overflow-hidden" id="events">
+        <section className="py-16 sm:py-24 px-4 max-w-5xl mx-auto relative overflow-hidden" id="events">
           {/* Swaying Botanical Vector Side Accents */}
-          <div aria-hidden="true" className="absolute -left-12 top-20 w-40 opacity-40 pointer-events-none animate-floral-left">
+          <div aria-hidden="true" className="absolute -left-12 top-20 w-28 sm:w-40 opacity-40 pointer-events-none animate-floral-left">
             <svg fill="none" viewBox="0 0 100 100">
               <path d="M0 20 Q40 40 70 90 Q30 70 0 20" fill="#fbcfe8" fillOpacity="0.45" />
               <path d="M10 10 Q60 30 80 80" stroke="#8fa8cf" strokeDasharray="2 3" strokeWidth="1.5" />
             </svg>
           </div>
-          <div aria-hidden="true" className="absolute -right-12 bottom-20 w-40 opacity-40 pointer-events-none animate-floral-right">
+          <div aria-hidden="true" className="absolute -right-12 bottom-20 w-28 sm:w-40 opacity-40 pointer-events-none animate-floral-right">
             <svg fill="none" viewBox="0 0 100 100">
               <path d="M100 20 Q60 40 30 90 Q70 70 100 20" fill="#A2BEE2" fillOpacity="0.45" />
               <path d="M90 10 Q40 30 20 80" stroke="#416788" strokeDasharray="2 3" strokeWidth="1.5" />
             </svg>
           </div>
-          <div className="text-center mb-16 reveal-item">
-            <p className="text-sm font-semibold tracking-widest text-steelBlue uppercase">
+          <div className="text-center mb-12 sm:mb-16 reveal-item">
+            <p className="text-xs sm:text-sm font-semibold tracking-widest text-steelBlue uppercase">
               Assalamualaikum Warahmatullahi Wabarakatuh
             </p>
-            <h2 className="font-serifHeading text-3xl md:text-4xl font-bold text-midnight mt-1">
+            <h2 className="font-serifHeading text-2xl sm:text-3xl md:text-4xl font-bold text-midnight mt-1">
               Waktu &amp; Tempat Acara
             </h2>
             <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3" />
@@ -1007,11 +1023,11 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 mb-10 sm:mb-12">
             {/* Akad Nikah Card */}
             <div className="reveal-item">
               <div className="p-[1.5px] rounded-3xl shimmer-border-box shadow-lg h-full">
-                <div className="glass-card card-aura-glow rounded-3xl p-8 text-center flex flex-col justify-between h-full group">
+                <div className="glass-card card-aura-glow rounded-3xl p-6 sm:p-8 text-center flex flex-col justify-between h-full group">
                   <div>
                     <div className="w-16 h-16 bg-softSky rounded-full flex items-center justify-center mx-auto mb-4 text-midnight group-hover:scale-110 transition-transform duration-300 shadow-inner animate-soft-float">
                       <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
@@ -1050,7 +1066,7 @@ export default function App() {
             {/* Resepsi Card */}
             <div className="reveal-item">
               <div className="p-[1.5px] rounded-3xl shimmer-border-box shadow-lg h-full">
-                <div className="glass-card card-aura-glow rounded-3xl p-8 text-center flex flex-col justify-between h-full group">
+                <div className="glass-card card-aura-glow rounded-3xl p-6 sm:p-8 text-center flex flex-col justify-between h-full group">
                   <div>
                     <div
                       className="w-16 h-16 bg-softSky rounded-full flex items-center justify-center mx-auto mb-4 text-steelBlue group-hover:scale-110 transition-transform duration-300 shadow-inner animate-soft-float"
@@ -1075,12 +1091,12 @@ export default function App() {
                     </div>
                   </div>
                   <a
-                    className="btn-interactive inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-steelBlue text-white text-xs font-semibold shadow-md w-full"
+                    className="btn-interactive inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-full bg-steelBlue text-white text-xs font-semibold shadow-md w-full"
                     href="https://maps.google.com/?q=Wisma+Karya+RW+06+Jl.+Ibu+Inggit+Garnasih+Gg.+Tegallega+No.44a+Bandung"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <svg className="w-4 h-4 fill-current text-powderBlue" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 fill-current text-powderBlue shrink-0" viewBox="0 0 24 24">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                     </svg>
                     <span>Buka Google Maps</span>
@@ -1092,7 +1108,7 @@ export default function App() {
 
           {/* Denah Lokasi & Map with Radar Sonar Pulse Pin */}
           <div className="reveal-item">
-            <div className="glass-card card-aura-glow rounded-3xl p-6 md:p-8 border border-powderBlue/50 text-center max-w-2xl mx-auto shadow-md">
+            <div className="glass-card card-aura-glow rounded-3xl p-5 sm:p-6 md:p-8 border border-powderBlue/50 text-center max-w-2xl mx-auto shadow-md">
               <div className="w-14 h-14 bg-midnight/10 text-midnight rounded-full flex items-center justify-center mx-auto mb-3 animate-soft-float">
                 <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
                   <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 2h2v3h-2v-3zm3 3h3v3h-3v-3zm-5 1h2v2h-2v-2zm3-3h2v2h-2v-2z" />
@@ -1105,7 +1121,7 @@ export default function App() {
                 Gunakan Google Maps untuk mendapatkan arahan rute langsung menuju lokasi acara di Wisma Karya RW 06 Bandung.
               </p>
               {/* Map Container with Sonar Pulsing Pin Indicator */}
-              <div className="w-full h-72 md:h-80 rounded-2xl overflow-hidden shadow-inner border border-powderBlue/40 my-4 relative">
+              <div className="w-full h-64 sm:h-72 md:h-80 rounded-2xl overflow-hidden shadow-inner border border-powderBlue/40 my-4 relative">
                 {/* Radar Sonar Pulse Overlay */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none flex items-center justify-center">
                   <span className="absolute w-12 h-12 rounded-full bg-steelBlue/30 sonar-radar-ring" />
@@ -1128,17 +1144,17 @@ export default function App() {
                   width="100%"
                 />
               </div>
-              <div className="inline-flex flex-wrap items-center justify-center gap-3">
+              <div className="inline-flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
                 <a
-                  className="btn-interactive inline-flex items-center gap-2 px-6 py-3 bg-midnight text-white text-xs font-semibold rounded-full shadow-md"
+                  className="btn-interactive inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 min-h-[44px] bg-midnight text-white text-xs font-semibold rounded-full shadow-md w-full sm:w-auto"
                   href="https://maps.google.com/?q=Wisma+Karya+RW+06+Jl.+Ibu+Inggit+Garnasih+Gg.+Tegallega+No.44a+Bandung"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <svg className="w-4 h-4 fill-current text-powderBlue" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 fill-current text-powderBlue shrink-0" viewBox="0 0 24 24">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                   </svg>
-                  <span>Buka Google Maps - Wisma Karya RW 06 Bandung</span>
+                  <span className="text-center">Buka Google Maps - Wisma Karya RW 06 Bandung</span>
                 </a>
               </div>
             </div>
@@ -1147,17 +1163,17 @@ export default function App() {
         {/* END: Events Schedule Section */}
 
         {/* BEGIN: Digital Envelope / Wedding Gift Section */}
-        <section className="py-24 px-4 max-w-4xl mx-auto relative overflow-hidden">
+        <section className="py-16 sm:py-24 px-4 max-w-4xl mx-auto relative overflow-hidden">
           {/* Swaying Botanical Side Element */}
-          <div aria-hidden="true" className="absolute -right-6 top-16 w-32 opacity-40 pointer-events-none animate-floral-right">
+          <div aria-hidden="true" className="absolute -right-6 top-16 w-24 sm:w-32 opacity-40 pointer-events-none animate-floral-right">
             <svg fill="none" viewBox="0 0 100 100">
               <path d="M10 10 Q80 40 80 90 Q30 60 10 10" fill="#fbcfe8" fillOpacity="0.4" />
               <circle cx="80" cy="90" fill="#e3be77" r="4" />
             </svg>
           </div>
-          <div className="text-center mb-16 reveal-item">
-            <p className="text-sm font-semibold tracking-widest text-steelBlue uppercase">Tanda Kasih</p>
-            <h2 className="font-serifHeading text-3xl font-bold text-midnight">Amplop Digital</h2>
+          <div className="text-center mb-12 sm:mb-16 reveal-item">
+            <p className="text-xs sm:text-sm font-semibold tracking-widest text-steelBlue uppercase">Tanda Kasih</p>
+            <h2 className="font-serifHeading text-2xl sm:text-3xl font-bold text-midnight">Amplop Digital</h2>
             <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3" />
             <p className="max-w-lg mx-auto text-slate-600 text-sm mt-3">
               Doa restu Anda merupakan hadiah terindah bagi kami. Namun jika berkenan memberikan tanda kasih, Anda dapat menyalurkannya melalui rekening berikut:
@@ -1166,25 +1182,25 @@ export default function App() {
           <div className="gap-6 max-w-md mx-auto flex justify-center reveal-item">
             {/* Bank Card with Shimmer Border and Floating Ambient */}
             <div className="w-full p-[1.5px] rounded-3xl shimmer-border-box shadow-xl animate-card-float">
-              <div className="glass-card card-aura-glow p-8 rounded-3xl text-center w-full relative overflow-hidden group">
+              <div className="glass-card card-aura-glow p-6 sm:p-8 rounded-3xl text-center w-full relative overflow-hidden group">
                 <div className="absolute -right-8 -top-8 w-24 h-24 bg-powderBlue/25 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-all" />
                 <div className="h-10 flex items-center justify-center font-bold text-xl text-midnight tracking-wider">
                   Sea Bank
                 </div>
                 <p className="text-xs text-slate-500 mt-2">Nomor Rekening:</p>
-                <div className="relative inline-block my-2">
-                  <p className="font-serifHeading text-2xl font-bold text-midnight tracking-wider" id="rekeningMandiri">
+                <div className="relative inline-block my-2 max-w-full">
+                  <p className="font-serifHeading text-xl sm:text-2xl font-bold text-midnight tracking-wider tabular-nums break-all" id="rekeningMandiri">
                     901410146994
                   </p>
                   <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent" />
                 </div>
                 <p className="text-xs text-slate-600 mb-5 font-medium">a.n. Daffa Aria Gunawan</p>
                 <button
-                  className="btn-interactive inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-softSky via-white to-softSky text-steelBlue border border-powderBlue/50 rounded-full text-xs font-semibold hover:text-midnight transition shadow-md hover:scale-105 cursor-pointer"
+                  className="btn-interactive inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] bg-gradient-to-r from-softSky via-white to-softSky text-steelBlue border border-powderBlue/50 rounded-full text-xs font-semibold hover:text-midnight transition shadow-md hover:scale-105 cursor-pointer"
                   onClick={() => copyToClipboard('901410146994', 'Sea Bank Daffa')}
                   type="button"
                 >
-                  <svg className="w-4 h-4 fill-current text-steelBlue" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 fill-current text-steelBlue shrink-0" viewBox="0 0 24 24">
                     <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
                   </svg>
                   <span>Salin No. Rekening</span>
@@ -1194,7 +1210,7 @@ export default function App() {
           </div>
           {/* Toast Feedback Notification */}
           <div
-            className={`fixed bottom-20 left-1/2 -translate-x-1/2 bg-midnight text-white text-xs px-6 py-3 rounded-full shadow-2xl transition-all duration-300 z-50 border border-powderBlue/40 ${
+            className={`fixed bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] left-1/2 -translate-x-1/2 bg-midnight text-white text-xs px-5 py-3 rounded-full shadow-2xl transition-all duration-300 z-50 border border-powderBlue/40 max-w-[calc(100vw-2rem)] text-center ${
               showToast ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
             id="copyToast"
@@ -1205,24 +1221,24 @@ export default function App() {
         {/* END: Digital Envelope / Wedding Gift Section */}
 
         {/* BEGIN: RSVP & Wishes Section */}
-        <section className="py-24 bg-gradient-to-b from-[#f4f8fc] to-softSky px-4 relative overflow-hidden">
+        <section className="py-16 sm:py-24 bg-gradient-to-b from-[#f4f8fc] to-softSky px-4 relative overflow-hidden">
           {/* Swaying Botanical Side Element */}
-          <div aria-hidden="true" className="absolute -left-10 bottom-16 w-36 opacity-35 pointer-events-none animate-floral-left">
+          <div aria-hidden="true" className="absolute -left-10 bottom-16 w-28 sm:w-36 opacity-35 pointer-events-none animate-floral-left">
             <svg fill="none" viewBox="0 0 100 100">
               <path d="M0 50 Q50 20 80 80 Q30 90 0 50" fill="#A2BEE2" fillOpacity="0.4" />
             </svg>
           </div>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12 reveal-item">
-              <p className="text-sm font-semibold tracking-widest text-steelBlue uppercase">Konfirmasi &amp; Harapan</p>
-              <h2 className="font-serifHeading text-3xl font-bold text-midnight">RSVP &amp; Doa Restu</h2>
+            <div className="text-center mb-10 sm:mb-12 reveal-item">
+              <p className="text-xs sm:text-sm font-semibold tracking-widest text-steelBlue uppercase">Konfirmasi &amp; Harapan</p>
+              <h2 className="font-serifHeading text-2xl sm:text-3xl font-bold text-midnight">RSVP &amp; Doa Restu</h2>
               <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3" />
             </div>
-            <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-8 items-start">
               {/* RSVP Form with Shimmer Border */}
               <div className="reveal-item">
                 <div className="p-[1px] rounded-3xl shimmer-border-box shadow-md">
-                  <div className="glass-card card-aura-glow p-6 md:p-8 rounded-3xl shadow-sm">
+                  <div className="glass-card card-aura-glow p-5 sm:p-6 md:p-8 rounded-3xl shadow-sm">
                     <h3 className="font-serifHeading text-lg font-bold text-midnight mb-4 flex items-center gap-2">
                       <span>Konfirmasi Kehadiran</span>
                       <span className="w-2 h-2 rounded-full bg-powderBlue animate-ping" />
@@ -1233,7 +1249,7 @@ export default function App() {
                           Nama Lengkap
                         </label>
                         <input
-                          className="w-full text-sm rounded-xl border border-slate-200 px-3 py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
+                          className="w-full text-base sm:text-sm rounded-xl border border-slate-200 px-3 py-2.5 sm:py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
                           id="guestName"
                           onChange={(e) => setGuestName(e.target.value)}
                           placeholder="Contoh: Dimas Aditya"
@@ -1247,7 +1263,7 @@ export default function App() {
                           Status Kehadiran
                         </label>
                         <select
-                          className="w-full text-sm rounded-xl border border-slate-200 px-3 py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
+                          className="w-full text-base sm:text-sm rounded-xl border border-slate-200 px-3 py-2.5 sm:py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
                           id="attendanceStatus"
                           onChange={(e) => setAttendanceStatus(e.target.value)}
                           value={attendanceStatus}
@@ -1262,7 +1278,7 @@ export default function App() {
                           Ucapan &amp; Doa Restu
                         </label>
                         <textarea
-                          className="w-full text-sm rounded-xl border border-slate-200 px-3 py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
+                          className="w-full text-base sm:text-sm rounded-xl border border-slate-200 px-3 py-2.5 sm:py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
                           id="guestMessage"
                           onChange={(e) => setGuestMessage(e.target.value)}
                           placeholder="Tuliskan pesan &amp; doa hangat..."
@@ -1272,7 +1288,7 @@ export default function App() {
                         />
                       </div>
                       <button
-                        className="btn-interactive w-full py-3 bg-midnight text-white text-sm font-semibold rounded-xl shadow-md cursor-pointer"
+                        className="btn-interactive w-full py-3 min-h-[44px] bg-midnight text-white text-sm font-semibold rounded-xl shadow-md cursor-pointer"
                         type="submit"
                       >
                         Kirim Konfirmasi
@@ -1285,11 +1301,11 @@ export default function App() {
               {/* Dynamic Wishes Feed with Live Counter */}
               <div className="reveal-item">
                 <div className="p-[1px] rounded-3xl shimmer-border-box shadow-md">
-                  <div className="glass-card card-aura-glow p-6 md:p-8 rounded-3xl shadow-sm flex flex-col h-[480px]">
-                    <h3 className="font-serifHeading text-lg font-bold text-midnight mb-4 flex items-center justify-between">
+                  <div className="glass-card card-aura-glow p-5 sm:p-6 md:p-8 rounded-3xl shadow-sm flex flex-col h-[380px] sm:h-[480px]">
+                    <h3 className="font-serifHeading text-lg font-bold text-midnight mb-4 flex items-center justify-between gap-2">
                       <span>Doa dari Sahabat</span>
                       <span
-                        className={`text-xs text-midnight px-3 py-1 rounded-full font-sans font-semibold transition-all duration-300 ${
+                        className={`text-xs text-midnight px-3 py-1 rounded-full font-sans font-semibold transition-all duration-300 shrink-0 ${
                           countPop ? 'scale-110 bg-powderBlue' : 'bg-powderBlue/40'
                         }`}
                         id="wishesCount"
@@ -1297,7 +1313,7 @@ export default function App() {
                         {wishes.length} Ucapan
                       </span>
                     </h3>
-                    <div className="flex-1 overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-powderBlue" id="wishesContainer">
+                    <div className="flex-1 overflow-y-auto overscroll-contain space-y-3 pr-1 sm:pr-2 scrollbar-thin scrollbar-thumb-powderBlue" id="wishesContainer">
                       {wishes.map((wish) => (
                         <div
                           key={wish.id}
@@ -1307,14 +1323,14 @@ export default function App() {
                               : 'bg-white/85 border-powderBlue/30 hover:border-powderBlue'
                           }`}
                         >
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between gap-2">
                             <span className="font-bold text-xs text-midnight">
                               {wish.name}{' '}
                               {wish.status && (
                                 <span className="font-normal text-[10px] text-steelBlue">({wish.status})</span>
                               )}
                             </span>
-                            <span className="text-[10px] text-slate-400">{wish.time}</span>
+                            <span className="text-[10px] text-slate-400 shrink-0">{wish.time}</span>
                           </div>
                           <p className="text-xs text-slate-600 mt-1 leading-relaxed">{wish.message}</p>
                         </div>
@@ -1330,7 +1346,7 @@ export default function App() {
       </main>
 
       {/* BEGIN: Footer Section */}
-      <footer className="bg-midnight text-white text-center py-12 px-4 border-t border-powderBlue/20 relative z-10">
+      <footer className="bg-midnight text-white text-center pt-12 pb-[max(3rem,calc(env(safe-area-inset-bottom)+2.5rem))] px-4 border-t border-powderBlue/20 relative z-10">
         <div className="max-w-lg mx-auto">
           <h4 className="font-script text-4xl text-powderBlue mb-3 drop-shadow">Mutiara &amp; Daffa</h4>
           <p className="text-xs text-iceBlue/90 mb-3 font-light leading-relaxed">

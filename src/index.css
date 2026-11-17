@@ -274,8 +274,35 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   pointer-events: none;
   z-index: 25;
+}
+
+html,
+body {
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) {
+  .glass-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-interactive:hover {
+    transform: none;
+  }
 }
 
 @keyframes fadeInView {
