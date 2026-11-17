@@ -4,14 +4,21 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
+import {
+  clearWishes,
+  deleteWish,
+  getWishes,
+  renderWishes,
+  saveWish,
+} from './script.js';
 
 interface WishItem {
   id: string;
   name: string;
-  status?: string;
-  time: string;
+  status: string;
   message: string;
-  isNew?: boolean;
+  createdAt: number;
+  formattedDate: string;
 }
 
 interface YTPlayer {
@@ -57,30 +64,6 @@ declare global {
 
 const YOUTUBE_VIDEO_ID = 'OOO4ROO_sPM';
 
-const INITIAL_WISHES: WishItem[] = [
-  {
-    id: 'wish-1',
-    name: 'Bagas & Riana',
-    time: 'Baru saja',
-    message:
-      'Selamat Mutiara & Daffa! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah selamanya.',
-  },
-  {
-    id: 'wish-2',
-    name: 'Fadhil Ramadhan',
-    time: '1 jam lalu',
-    message:
-      'Barakallah bro Daffa & Mutiara! Lancar terus sampai hari H ya, selamat berbahagia.',
-  },
-  {
-    id: 'wish-3',
-    name: 'Nadia Safitri',
-    time: '3 jam lalu',
-    message:
-      'Mutiara cantik sekali! Happy wedding yaa, langgeng sampai kakek nenek!',
-  },
-];
-
 export default function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ytContainerRef = useRef<HTMLDivElement | null>(null);
@@ -107,8 +90,12 @@ export default function App() {
   const [guestName, setGuestName] = useState('');
   const [attendanceStatus, setAttendanceStatus] = useState('Hadir');
   const [guestMessage, setGuestMessage] = useState('');
-  const [wishes, setWishes] = useState<WishItem[]>(INITIAL_WISHES);
+  const [wishes, setWishes] = useState<WishItem[]>(() => renderWishes(getWishes()));
   const [countPop, setCountPop] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [formSuccess, setFormSuccess] = useState('');
+  const [newlyAddedId, setNewlyAddedId] = useState<string | null>(null);
+  const [confirmClear, setConfirmClear] = useState(false);
 
   // Initialize YouTube IFrame Player for background music
   useEffect(() => {
@@ -584,41 +571,77 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleStorageSync = () => {
+      setWishes(renderWishes(getWishes()));
+    };
+    window.addEventListener('storage', handleStorageSync);
+    return () => window.removeEventListener('storage', handleStorageSync);
+  }, []);
+
+  const triggerToast = (message: string) => {
+    setToastMessage(message);
+    setShowToast(true);
+    if (toastTimerRef.current) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    toastTimerRef.current = window.setTimeout(() => {
+      setShowToast(false);
+    }, 3200);
+  };
+
   const copyToClipboard = (text: string, accountName: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      setToastMessage(`Nomor rekening ${accountName} berhasil disalin! ✨`);
-      setShowToast(true);
-      if (toastTimerRef.current) {
-        window.clearTimeout(toastTimerRef.current);
-      }
-      toastTimerRef.current = window.setTimeout(() => {
-        setShowToast(false);
-      }, 3200);
+      triggerToast(`Nomor rekening ${accountName} berhasil disalin! ✨`);
     });
   };
 
   const handleRsvpSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const name = guestName.trim();
-    const message = guestMessage.trim();
-    if (!name || !message) return;
+    setFormError('');
+    setFormSuccess('');
 
-    const newWish: WishItem = {
-      id: `wish-${Date.now()}`,
-      name,
+    const result = saveWish({
+      name: guestName,
       status: attendanceStatus,
-      time: 'Baru saja',
-      message,
-      isNew: true,
-    };
+      message: guestMessage,
+    });
 
-    setWishes((prev) => [newWish, ...prev]);
+    if (!result.ok) {
+      setFormError(result.error);
+      return;
+    }
+
+    const updated = renderWishes(result.wishes);
+    setWishes(updated);
+    setNewlyAddedId(result.wish.id);
+    setConfirmClear(false);
     setCountPop(true);
     window.setTimeout(() => setCountPop(false), 350);
 
     setGuestName('');
     setAttendanceStatus('Hadir');
     setGuestMessage('');
+    setFormSuccess('Terima kasih! Ucapan & doa restu Anda berhasil tersimpan.');
+    triggerToast('Ucapan & doa restu berhasil dikirim! ✨');
+
+    window.setTimeout(() => {
+      setFormSuccess('');
+    }, 4500);
+  };
+
+  const handleDeleteWish = (id: string) => {
+    const remaining = deleteWish(id);
+    setWishes(renderWishes(remaining));
+    triggerToast('Ucapan dihapus dari penyimpanan lokal.');
+  };
+
+  const handleClearWishes = () => {
+    const cleared = clearWishes();
+    setWishes(renderWishes(cleared));
+    setConfirmClear(false);
+    setNewlyAddedId(null);
+    triggerToast('Seluruh ucapan lokal berhasil dibersihkan.');
   };
 
   return (
@@ -710,6 +733,17 @@ export default function App() {
         </button>
       </aside>
       {/* END: Audio Controller Widget */}
+
+      {/* Toast Feedback Notification */}
+      <div
+        className={`fixed bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] left-1/2 -translate-x-1/2 bg-midnight text-white text-xs px-5 py-3 rounded-full shadow-2xl transition-all duration-300 z-50 border border-powderBlue/40 max-w-[calc(100vw-2rem)] text-center ${
+          showToast ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        id="copyToast"
+        role="status"
+      >
+        {toastMessage}
+      </div>
 
       {/* TAMPILAN 1: Hero Cover Section */}
       {!isInvitationOpen && (
@@ -1194,19 +1228,19 @@ export default function App() {
               <div className="glass-card card-aura-glow p-6 sm:p-8 rounded-3xl text-center w-full relative overflow-hidden group">
                 <div className="absolute -right-8 -top-8 w-24 h-24 bg-powderBlue/25 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-all" />
                 <div className="h-10 flex items-center justify-center font-bold text-xl text-midnight tracking-wider">
-                  Sea Bank
+                  Seabank
                 </div>
                 <p className="text-xs text-slate-500 mt-2">Nomor Rekening:</p>
                 <div className="relative inline-block my-2 max-w-full">
                   <p className="font-serifHeading text-xl sm:text-2xl font-bold text-midnight tracking-wider tabular-nums break-all" id="rekeningMandiri">
-                    901410146994
+                    901568679189
                   </p>
                   <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent" />
                 </div>
-                <p className="text-xs text-slate-600 mb-5 font-medium">a.n. Daffa Aria Gunawan</p>
+                <p className="text-xs text-slate-600 mb-5 font-medium">a/n Daffa Aria Gunawan</p>
                 <button
                   className="btn-interactive inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] bg-gradient-to-r from-softSky via-white to-softSky text-steelBlue border border-powderBlue/50 rounded-full text-xs font-semibold hover:text-midnight transition shadow-md hover:scale-105 cursor-pointer"
-                  onClick={() => copyToClipboard('901410146994', 'Sea Bank Daffa')}
+                  onClick={() => copyToClipboard('901568679189', 'Seabank Daffa')}
                   type="button"
                 >
                   <svg className="w-4 h-4 fill-current text-steelBlue shrink-0" viewBox="0 0 24 24">
@@ -1216,15 +1250,6 @@ export default function App() {
                 </button>
               </div>
             </div>
-          </div>
-          {/* Toast Feedback Notification */}
-          <div
-            className={`fixed bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] left-1/2 -translate-x-1/2 bg-midnight text-white text-xs px-5 py-3 rounded-full shadow-2xl transition-all duration-300 z-50 border border-powderBlue/40 max-w-[calc(100vw-2rem)] text-center ${
-              showToast ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
-            id="copyToast"
-          >
-            {toastMessage}
           </div>
         </section>
         {/* END: Digital Envelope / Wedding Gift Section */}
@@ -1252,7 +1277,23 @@ export default function App() {
                       <span>Konfirmasi Kehadiran</span>
                       <span className="w-2 h-2 rounded-full bg-powderBlue animate-ping" />
                     </h3>
-                    <form className="space-y-4" id="rsvpForm" onSubmit={handleRsvpSubmit}>
+                    <form className="space-y-4" id="rsvpForm" noValidate onSubmit={handleRsvpSubmit}>
+                      {formError && (
+                        <div
+                          className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-xs font-medium text-rose-700"
+                          role="alert"
+                        >
+                          {formError}
+                        </div>
+                      )}
+                      {formSuccess && (
+                        <div
+                          className="rounded-xl border border-powderBlue bg-softSky px-3.5 py-2.5 text-xs font-medium text-midnight animate-fade-in-view"
+                          role="status"
+                        >
+                          {formSuccess}
+                        </div>
+                      )}
                       <div>
                         <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1" htmlFor="guestName">
                           Nama Lengkap
@@ -1260,7 +1301,11 @@ export default function App() {
                         <input
                           className="w-full text-base sm:text-sm rounded-xl border border-slate-200 px-3 py-2.5 sm:py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
                           id="guestName"
-                          onChange={(e) => setGuestName(e.target.value)}
+                          maxLength={80}
+                          onChange={(e) => {
+                            setGuestName(e.target.value);
+                            if (formError) setFormError('');
+                          }}
                           placeholder="Contoh: Dimas Aditya"
                           required
                           type="text"
@@ -1289,7 +1334,11 @@ export default function App() {
                         <textarea
                           className="w-full text-base sm:text-sm rounded-xl border border-slate-200 px-3 py-2.5 sm:py-2 focus:border-steelBlue focus:ring-1 focus:ring-steelBlue outline-none transition bg-white/90"
                           id="guestMessage"
-                          onChange={(e) => setGuestMessage(e.target.value)}
+                          maxLength={500}
+                          onChange={(e) => {
+                            setGuestMessage(e.target.value);
+                            if (formError) setFormError('');
+                          }}
                           placeholder="Tuliskan pesan &amp; doa hangat..."
                           required
                           rows={3}
@@ -1300,7 +1349,7 @@ export default function App() {
                         className="btn-interactive w-full py-3 min-h-[44px] bg-midnight text-white text-sm font-semibold rounded-xl shadow-md cursor-pointer"
                         type="submit"
                       >
-                        Kirim Konfirmasi
+                        Kirim Ucapan
                       </button>
                     </form>
                   </div>
@@ -1311,39 +1360,112 @@ export default function App() {
               <div className="reveal-item">
                 <div className="p-[1px] rounded-3xl shimmer-border-box shadow-md">
                   <div className="glass-card card-aura-glow p-5 sm:p-6 md:p-8 rounded-3xl shadow-sm flex flex-col h-[380px] sm:h-[480px]">
-                    <h3 className="font-serifHeading text-lg font-bold text-midnight mb-4 flex items-center justify-between gap-2">
-                      <span>Doa dari Sahabat</span>
-                      <span
-                        className={`text-xs text-midnight px-3 py-1 rounded-full font-sans font-semibold transition-all duration-300 shrink-0 ${
-                          countPop ? 'scale-110 bg-powderBlue' : 'bg-powderBlue/40'
-                        }`}
-                        id="wishesCount"
-                      >
-                        {wishes.length} Ucapan
-                      </span>
-                    </h3>
-                    <div className="flex-1 overflow-y-auto overscroll-contain space-y-3 pr-1 sm:pr-2 scrollbar-thin scrollbar-thumb-powderBlue" id="wishesContainer">
-                      {wishes.map((wish) => (
-                        <div
-                          key={wish.id}
-                          className={`p-3.5 rounded-2xl border transition transform hover:translate-x-1 duration-300 shadow-sm ${
-                            wish.isNew
-                              ? 'bg-white/90 border-powderBlue/40'
-                              : 'bg-white/85 border-powderBlue/30 hover:border-powderBlue'
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                      <h3 className="font-serifHeading text-lg font-bold text-midnight">
+                        Doa dari Sahabat
+                      </h3>
+                      <div className="flex items-center gap-2">
+                        {wishes.length > 0 && (
+                          confirmClear ? (
+                            <div className="flex items-center gap-1.5">
+                              <button
+                                className="px-2.5 py-1 rounded-full bg-rose-600 text-white text-[10px] font-semibold hover:bg-rose-700 transition cursor-pointer"
+                                onClick={handleClearWishes}
+                                type="button"
+                              >
+                                Hapus Semua
+                              </button>
+                              <button
+                                className="px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 text-[10px] font-semibold hover:bg-slate-300 transition cursor-pointer"
+                                onClick={() => setConfirmClear(false)}
+                                type="button"
+                              >
+                                Batal
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              aria-label="Hapus semua ucapan lokal"
+                              className="px-2.5 py-1 rounded-full border border-powderBlue/60 text-[10px] font-semibold text-steelBlue hover:bg-softSky hover:text-midnight transition cursor-pointer"
+                              onClick={() => setConfirmClear(true)}
+                              type="button"
+                            >
+                              Bersihkan
+                            </button>
+                          )
+                        )}
+                        <span
+                          className={`text-xs text-midnight px-3 py-1 rounded-full font-sans font-semibold transition-all duration-300 shrink-0 ${
+                            countPop ? 'scale-110 bg-powderBlue' : 'bg-powderBlue/40'
                           }`}
+                          id="wishesCount"
                         >
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="font-bold text-xs text-midnight">
-                              {wish.name}{' '}
-                              {wish.status && (
-                                <span className="font-normal text-[10px] text-steelBlue">({wish.status})</span>
-                              )}
-                            </span>
-                            <span className="text-[10px] text-slate-400 shrink-0">{wish.time}</span>
+                          {wishes.length} Ucapan
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex-1 overflow-y-auto overscroll-contain space-y-3 pr-1 sm:pr-2 scrollbar-thin scrollbar-thumb-powderBlue" id="wishesContainer">
+                      {wishes.length === 0 ? (
+                        <div className="h-full flex flex-col items-center justify-center text-center px-4 py-8 rounded-2xl border border-dashed border-powderBlue/70 bg-white/75">
+                          <div className="w-12 h-12 rounded-full bg-softSky text-steelBlue flex items-center justify-center mb-3 shadow-inner">
+                            <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                            </svg>
                           </div>
-                          <p className="text-xs text-slate-600 mt-1 leading-relaxed">{wish.message}</p>
+                          <p className="font-serifHeading text-sm font-bold text-midnight">
+                            Belum Ada Ucapan &amp; Doa Restu
+                          </p>
+                          <p className="text-xs text-slate-500 mt-1.5 max-w-xs leading-relaxed">
+                            Jadilah yang pertama menuliskan doa restu dan harapan terbaik untuk Mutiara &amp; Daffa.
+                          </p>
                         </div>
-                      ))}
+                      ) : (
+                        wishes.map((wish) => {
+                          const isFresh = wish.id === newlyAddedId;
+                          return (
+                            <article
+                              key={wish.id}
+                              className={`p-3.5 rounded-2xl border transition duration-300 shadow-sm ${
+                                isFresh
+                                  ? 'animate-fade-in-view bg-softSky/90 border-steelBlue/50 ring-1 ring-powderBlue/60'
+                                  : 'bg-white/90 border-powderBlue/35 hover:border-powderBlue'
+                              }`}
+                            >
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="min-w-0">
+                                  <div className="flex flex-wrap items-center gap-1.5">
+                                    <span className="font-bold text-xs text-midnight break-words">
+                                      {wish.name}
+                                    </span>
+                                    {wish.status && (
+                                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-softSky text-steelBlue border border-powderBlue/40">
+                                        {wish.status}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <span className="block text-[10px] text-slate-400 mt-0.5">
+                                    {wish.formattedDate}
+                                  </span>
+                                </div>
+                                <button
+                                  aria-label={`Hapus ucapan dari ${wish.name}`}
+                                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition shrink-0 cursor-pointer"
+                                  onClick={() => handleDeleteWish(wish.id)}
+                                  title="Hapus ucapan"
+                                  type="button"
+                                >
+                                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                                  </svg>
+                                </button>
+                              </div>
+                              <p className="text-xs text-slate-600 mt-2 leading-relaxed break-words whitespace-pre-line">
+                                {wish.message}
+                              </p>
+                            </article>
+                          );
+                        })
+                      )}
                     </div>
                   </div>
                 </div>
