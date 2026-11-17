@@ -720,11 +720,8 @@ export default function App() {
             <span className="w-2 h-2 rounded-full bg-powderBlue animate-ping" />
             <span>The Wedding Celebration</span>
           </div>
-          <p className="font-serifHeading tracking-[0.3em] text-sm uppercase text-iceBlue mb-2 sm:mb-3 drop-shadow">
-            Walimatul &apos;Ursy
-          </p>
           <h1 className="font-script text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-powderBlue to-white my-2 sm:my-3 drop-shadow-lg tracking-wide hover:scale-105 transition-transform duration-700">
-            Mutiara &amp; Daffa
+            M &amp; D
           </h1>
           <p className="font-light text-slate-200 max-w-xl mx-auto text-sm md:text-base leading-relaxed my-3 sm:my-4 italic drop-shadow-sm">
             &quot;Dan diantara tanda-tanda kekuasaan-Nya adalah diciptakannya untukmu pasangan hidup dari jenismu sendiri supaya kamu merasa tentram disampingnya dan dijadikannya kasih sayang diantara kamu. Sesungguhnya yang demikian itu menjadi tanda kebesaran Allah bagi orang yang berpikir&quot;
