@@ -714,18 +714,27 @@ export default function App() {
       {/* TAMPILAN 1: Hero Cover Section */}
       {!isInvitationOpen && (
       <header
-        className={`fixed inset-0 z-20 min-h-dvh flex items-center justify-center text-center px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain bg-gradient-to-b from-midnight via-[#183a66] to-steelBlue text-white transition-all duration-500 ease-out ${
+        className={`fixed inset-0 z-20 min-h-dvh flex items-center justify-center text-center px-4 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain bg-gradient-to-b from-[#0f2c63] via-midnight to-[#0f172a] text-white transition-all duration-500 ease-out ${
           isOpening ? 'opacity-0 scale-105' : 'opacity-100 scale-100'
         }`}
         id="cover"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(17, 36, 68, 0.78), rgba(17, 47, 88, 0.72), rgba(15, 23, 42, 0.88)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuC46r7rxCUNSMdVXC24XhhjxXNilDumZZ3RuFkZi3A8ImjyxUzWsa9GdxREIS7d0QXSY2cRrv6EW8xlOTXGjZHrCSzv4__z4jNEchYJlTmMsqOBGn4fQpZhwD-DCY2hG1zr1hWtXfXN_1aUkovBMKobnFtLipgwMbd7jxMtcv5dI_QTlt2WT-Zq32aLcztrT4yyX_N3RpCnTVkJuNmtvF9QhyEkRR6XC5xBth1BliklenayEEhSRByl-w")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 25%',
-          backgroundRepeat: 'no-repeat',
-        }}
       >
+        <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden">
+          <img
+            alt=""
+            className="cover-hero-photo"
+            referrerPolicy="no-referrer"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC46r7rxCUNSMdVXC24XhhjxXNilDumZZ3RuFkZi3A8ImjyxUzWsa9GdxREIS7d0QXSY2cRrv6EW8xlOTXGjZHrCSzv4__z4jNEchYJlTmMsqOBGn4fQpZhwD-DCY2hG1zr1hWtXfXN_1aUkovBMKobnFtLipgwMbd7jxMtcv5dI_QTlt2WT-Zq32aLcztrT4yyX_N3RpCnTVkJuNmtvF9QhyEkRR6XC5xBth1BliklenayEEhSRByl-w"
+          />
+        </div>
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(rgba(17, 36, 68, 0.68), rgba(17, 47, 88, 0.72), rgba(15, 23, 42, 0.90))',
+          }}
+        />
         <div className="fixed inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-powderBlue/25 via-transparent to-black/50 pointer-events-none" />
         <div className="fixed -top-24 -left-24 w-72 sm:w-96 h-72 sm:h-96 bg-powderBlue/20 rounded-full blur-3xl animate-pulse pointer-events-none" />
         <div className="fixed -bottom-24 -right-24 w-72 sm:w-96 h-72 sm:h-96 bg-cornflower/25 rounded-full blur-3xl animate-pulse pointer-events-none" />

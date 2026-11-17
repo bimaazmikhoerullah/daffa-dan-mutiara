@@ -319,3 +319,22 @@ textarea {
 .animate-fade-in-view {
   animation: fadeInView 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+.cover-hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .cover-hero-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center top;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 52%, rgba(0, 0, 0, 0) 98%);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 52%, rgba(0, 0, 0, 0) 98%);
+  }
+}
