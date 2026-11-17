@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+@theme {
+  --color-midnight: #112F58;
+  --color-deepIndigo: #1b2838;
+  --color-navyAccent: #1e3a63;
+  --color-steelBlue: #416788;
+  --color-cornflower: #7E7F97;
+  --color-periwinkle: #8fa8cf;
+  --color-powderBlue: #A2BEE2;
+  --color-iceBlue: #dbeafe;
+  --color-softSky: #eef6fc;
+  --color-goldChampagne: #e3be77;
+  --color-roseBlush: #fbcfe8;
+
+  --font-serifHeading: "Cinzel", serif;
+  --font-script: "Great Vibes", cursive;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(162, 190, 226, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(162, 190, 226, 0.85);
+  }
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateSlowReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes floralSwayLeft {
+  0%, 100% {
+    transform: rotate(0deg) scale(1) translateY(0);
+  }
+  50% {
+    transform: rotate(4.5deg) scale(1.04) translateY(-6px);
+  }
+}
+
+@keyframes floralSwayRight {
+  0%, 100% {
+    transform: rotate(0deg) scale(1) translateY(0);
+  }
+  50% {
+    transform: rotate(-4.5deg) scale(1.04) translateY(-6px);
+  }
+}
+
+@keyframes softFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes cardFloatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes auraShimmer {
+  0%, 100% {
+    box-shadow: 0 10px 30px -5px rgba(162, 190, 226, 0.35), 0 0 20px 2px rgba(251, 207, 232, 0.25);
+  }
+  50% {
+    box-shadow: 0 20px 42px -4px rgba(65, 103, 136, 0.4), 0 0 32px 6px rgba(162, 190, 226, 0.6);
+  }
+}
+
+@keyframes flowLight {
+  0% {
+    top: -20%;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes borderGradientRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes sonarPing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@keyframes avatarRingsDynamic {
+  0% {
+    transform: scale(0.96);
+    box-shadow: 0 0 0 0 rgba(162, 190, 226, 0.7), 0 0 0 0 rgba(251, 207, 232, 0.6);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px 8px rgba(162, 190, 226, 0.4), 0 0 35px 12px rgba(251, 207, 232, 0.35);
+  }
+  100% {
+    transform: scale(0.96);
+    box-shadow: 0 0 0 0 rgba(162, 190, 226, 0), 0 0 0 0 rgba(251, 207, 232, 0);
+  }
+}
+
+@keyframes equalizerBar {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+.animate-floral-left {
+  animation: floralSwayLeft 7s ease-in-out infinite;
+  transform-origin: top left;
+}
+
+.animate-floral-right {
+  animation: floralSwayRight 8s ease-in-out infinite;
+  transform-origin: top right;
+}
+
+.animate-card-float {
+  animation: cardFloatGentle 6s ease-in-out infinite;
+}
+
+.animate-soft-float {
+  animation: softFloat 5s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: rotateSlow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: rotateSlowReverse 25s linear infinite;
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.card-aura-glow {
+  animation: auraShimmer 5s ease-in-out infinite;
+}
+
+.avatar-glow-ring {
+  animation: avatarRingsDynamic 3.2s ease-in-out infinite;
+}
+
+.timeline-shimmer-beam {
+  position: absolute;
+  width: 4px;
+  height: 90px;
+  left: -1px;
+  background: linear-gradient(180deg, transparent, #ffffff, #A2BEE2, transparent);
+  animation: flowLight 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  border-radius: 9999px;
+  box-shadow: 0 0 14px 2px rgba(162, 190, 226, 0.9);
+}
+
+.sonar-radar-ring {
+  animation: sonarPing 2.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.shimmer-border-box {
+  background: linear-gradient(120deg, #A2BEE2, #fbcfe8, #416788, #dbeafe, #A2BEE2);
+  background-size: 300% 300%;
+  animation: borderGradientRotate 8s ease infinite;
+}
+
+.eq-bar-1 { animation: equalizerBar 0.8s ease-in-out infinite; }
+.eq-bar-2 { animation: equalizerBar 1.2s ease-in-out infinite 0.2s; }
+.eq-bar-3 { animation: equalizerBar 0.9s ease-in-out infinite 0.4s; }
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(162, 190, 226, 0.45);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 24px 42px -10px rgba(17, 47, 88, 0.18), 0 0 26px rgba(162, 190, 226, 0.55);
+}
+
+.glass-card-dark {
+  background: rgba(17, 47, 88, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(162, 190, 226, 0.35);
+}
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-interactive {
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-interactive::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: rotate(30deg) translateX(-100%);
+  transition: transform 0.75s ease;
+}
+
+.btn-interactive:hover::after {
+  transform: rotate(30deg) translateX(100%);
+}
+
+.btn-interactive:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 28px -4px rgba(65, 103, 136, 0.48);
+}
+
+.btn-interactive:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+#petals-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 25;
+}
+
+@keyframes fadeInView {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-view {
+  animation: fadeInView 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

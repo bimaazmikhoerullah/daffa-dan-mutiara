@@ -1,0 +1,6 @@
+{
+  "name": "Undangan Pernikahan - Mutiara & Daffa",
+  "description": "Undangan pernikahan digital Mutiara Afdelani & Daffa Aria Gunawan - Minggu, 13 Desember 2026 di Wisma Karya RW 06 Bandung.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

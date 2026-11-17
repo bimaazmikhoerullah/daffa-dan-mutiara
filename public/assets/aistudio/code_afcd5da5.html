@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Undangan Pernikahan - Mutiara &amp; Daffa</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&amp;family=Great+Vibes&amp;family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration with Palette from DataStore Image -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            midnight: '#112F58',
+            deepIndigo: '#1b2838',
+            navyAccent: '#1e3a63',
+            steelBlue: '#416788',
+            cornflower: '#7E7F97',
+            periwinkle: '#8fa8cf',
+            powderBlue: '#A2BEE2',
+            iceBlue: '#dbeafe',
+            softSky: '#eef6fc',
+            goldChampagne: '#e3be77',
+            roseBlush: '#fbcfe8'
+          },
+          fontFamily: {
+            serifHeading: ['"Cinzel"', 'serif'],
+            script: ['"Great Vibes"', 'cursive'],
+            body: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Custom Styles for Dynamic & Ambient Animations -->
+<style data-purpose="custom-animations">
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 25px rgba(162, 190, 226, 0.45);
+      }
+      50% {
+        box-shadow: 0 0 45px rgba(162, 190, 226, 0.85);
+      }
+    }
+
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes rotateSlowReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    /* Sway animations for floral decorations */
+    @keyframes floralSwayLeft {
+      0%, 100% {
+        transform: rotate(0deg) scale(1) translateY(0);
+      }
+      50% {
+        transform: rotate(4.5deg) scale(1.04) translateY(-6px);
+      }
+    }
+
+    @keyframes floralSwayRight {
+      0%, 100% {
+        transform: rotate(0deg) scale(1) translateY(0);
+      }
+      50% {
+        transform: rotate(-4.5deg) scale(1.04) translateY(-6px);
+      }
+    }
+
+    @keyframes softFloat {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes cardFloatGentle {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    @keyframes auraShimmer {
+      0%, 100% {
+        box-shadow: 0 10px 30px -5px rgba(162, 190, 226, 0.35), 0 0 20px 2px rgba(251, 207, 232, 0.25);
+      }
+      50% {
+        box-shadow: 0 20px 42px -4px rgba(65, 103, 136, 0.4), 0 0 32px 6px rgba(162, 190, 226, 0.6);
+      }
+    }
+
+    /* Timeline flowing shimmer light */
+    @keyframes flowLight {
+      0% {
+        top: -20%;
+        opacity: 0;
+      }
+      30% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.9;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
+    }
+
+    /* Shimmer gradient border effect */
+    @keyframes borderGradientRotate {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Radar Sonar ripple */
+    @keyframes sonarPing {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.9;
+      }
+      100% {
+        transform: scale(2.8);
+        opacity: 0;
+      }
+    }
+
+    /* Avatar glowing dynamic rings */
+    @keyframes avatarRingsDynamic {
+      0% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(162, 190, 226, 0.7), 0 0 0 0 rgba(251, 207, 232, 0.6);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px 8px rgba(162, 190, 226, 0.4), 0 0 35px 12px rgba(251, 207, 232, 0.35);
+      }
+      100% {
+        transform: scale(0.96);
+        box-shadow: 0 0 0 0 rgba(162, 190, 226, 0), 0 0 0 0 rgba(251, 207, 232, 0);
+      }
+    }
+
+    @keyframes equalizerBar {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+
+    .animate-floral-left {
+      animation: floralSwayLeft 7s ease-in-out infinite;
+      transform-origin: top left;
+    }
+
+    .animate-floral-right {
+      animation: floralSwayRight 8s ease-in-out infinite;
+      transform-origin: top right;
+    }
+
+    .animate-card-float {
+      animation: cardFloatGentle 6s ease-in-out infinite;
+    }
+
+    .animate-soft-float {
+      animation: softFloat 5s ease-in-out infinite;
+    }
+
+    .animate-spin-slow {
+      animation: rotateSlow 20s linear infinite;
+    }
+
+    .animate-spin-reverse {
+      animation: rotateSlowReverse 25s linear infinite;
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    .card-aura-glow {
+      animation: auraShimmer 5s ease-in-out infinite;
+    }
+
+    .avatar-glow-ring {
+      animation: avatarRingsDynamic 3.2s ease-in-out infinite;
+    }
+
+    .timeline-shimmer-beam {
+      position: absolute;
+      width: 4px;
+      height: 90px;
+      left: -1px;
+      background: linear-gradient(180deg, transparent, #ffffff, #A2BEE2, transparent);
+      animation: flowLight 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      border-radius: 9999px;
+      box-shadow: 0 0 14px 2px rgba(162, 190, 226, 0.9);
+    }
+
+    .sonar-radar-ring {
+      animation: sonarPing 2.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+
+    .shimmer-border-box {
+      background: linear-gradient(120deg, #A2BEE2, #fbcfe8, #416788, #dbeafe, #A2BEE2);
+      background-size: 300% 300%;
+      animation: borderGradientRotate 8s ease infinite;
+    }
+
+    .eq-bar-1 { animation: equalizerBar 0.8s ease-in-out infinite; }
+    .eq-bar-2 { animation: equalizerBar 1.2s ease-in-out infinite 0.2s; }
+    .eq-bar-3 { animation: equalizerBar 0.9s ease-in-out infinite 0.4s; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(162, 190, 226, 0.45);
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 24px 42px -10px rgba(17, 47, 88, 0.18), 0 0 26px rgba(162, 190, 226, 0.55);
+    }
+
+    .glass-card-dark {
+      background: rgba(17, 47, 88, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(162, 190, 226, 0.35);
+    }
+
+    /* Scroll Reveal Initial and Visible States */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-item.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Interactive button micro-interactions */
+    .btn-interactive {
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-interactive::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: rotate(30deg) translateX(-100%);
+      transition: transform 0.75s ease;
+    }
+
+    .btn-interactive:hover::after {
+      transform: rotate(30deg) translateX(100%);
+    }
+
+    .btn-interactive:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 28px -4px rgba(65, 103, 136, 0.48);
+    }
+
+    .btn-interactive:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    #petals-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 25;
+    }
+  </style>
+</head>
+<body class="font-body text-slate-800 bg-[#f4f8fc] overflow-x-hidden selection:bg-powderBlue selection:text-midnight relative">
+<!-- BEGIN: Ambient Romantic Falling Floral Petals & Sparkle Canvas -->
+<canvas aria-hidden="true" id="petals-canvas"></canvas>
+<!-- END: Ambient Romantic Falling Floral Petals & Sparkle Canvas -->
+<!-- BEGIN: Floating Botanical Corner Accents (Fixed Ambient Overlay) -->
+<div aria-hidden="true" class="fixed top-0 left-0 pointer-events-none z-30 w-48 sm:w-64 md:w-80 animate-floral-left opacity-90 drop-shadow-md">
+<svg class="w-full h-auto filter drop-shadow-sm" fill="none" viewbox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+<path d="M-20 -20 C60 10, 110 70, 150 140 C120 110, 70 80, -20 60 Z" fill="#8fa8cf" fill-opacity="0.3"></path>
+<path d="M-10 -10 C70 40, 130 90, 180 180 C150 130, 90 90, -10 40 Z" fill="#416788" fill-opacity="0.25"></path>
+<path d="M20 15 C45 35, 60 70, 50 90 C35 75, 25 50, 20 15 Z" fill="#A2BEE2" fill-opacity="0.65"></path>
+<path d="M60 40 C95 45, 125 75, 115 105 C90 95, 75 70, 60 40 Z" fill="#fbcfe8" fill-opacity="0.65"></path>
+<path d="M30 65 C60 85, 80 120, 65 145 C45 125, 35 95, 30 65 Z" fill="#dbeafe" fill-opacity="0.75"></path>
+<circle cx="50" cy="50" fill="#e3be77" fill-opacity="0.8" r="10"></circle>
+<circle cx="50" cy="50" fill="#ffffff" fill-opacity="0.9" r="5"></circle>
+<path d="M0 0 Q90 50 120 160 T160 210" fill="none" stroke="#8fa8cf" stroke-dasharray="2 3" stroke-opacity="0.6" stroke-width="1.8"></path>
+<circle cx="120" cy="160" fill="#A2BEE2" r="4"></circle>
+<circle cx="160" cy="210" fill="#fbcfe8" r="3"></circle>
+</svg>
+</div>
+<div aria-hidden="true" class="fixed top-0 right-0 pointer-events-none z-30 w-48 sm:w-64 md:w-80 animate-floral-right opacity-90 drop-shadow-md">
+<svg class="w-full h-auto filter drop-shadow-sm" fill="none" viewbox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+<path d="M280 -20 C200 10, 150 70, 110 140 C140 110, 190 80, 280 60 Z" fill="#8fa8cf" fill-opacity="0.3"></path>
+<path d="M270 -10 C190 40, 130 90, 80 180 C110 130, 170 90, 270 40 Z" fill="#416788" fill-opacity="0.25"></path>
+<path d="M240 15 C215 35, 200 70, 210 90 C225 75, 235 50, 240 15 Z" fill="#A2BEE2" fill-opacity="0.65"></path>
+<path d="M200 40 C165 45, 135 75, 145 105 C170 95, 185 70, 200 40 Z" fill="#fbcfe8" fill-opacity="0.65"></path>
+<path d="M230 65 C200 85, 180 120, 195 145 C215 125, 225 95, 230 65 Z" fill="#dbeafe" fill-opacity="0.75"></path>
+<circle cx="210" cy="50" fill="#e3be77" fill-opacity="0.8" r="10"></circle>
+<circle cx="210" cy="50" fill="#ffffff" fill-opacity="0.9" r="5"></circle>
+<path d="M260 0 Q170 50 140 160 T100 210" fill="none" stroke="#8fa8cf" stroke-dasharray="2 3" stroke-opacity="0.6" stroke-width="1.8"></path>
+<circle cx="140" cy="160" fill="#A2BEE2" r="4"></circle>
+<circle cx="100" cy="210" fill="#fbcfe8" r="3"></circle>
+</svg>
+</div>
+<!-- END: Floating Botanical Corner Accents -->
+<!-- BEGIN: Audio Controller Widget -->
+<aside class="fixed bottom-6 right-6 z-50 flex items-center gap-3" data-purpose="audio-controller">
+<button aria-label="Putar Musik Undangan" class="relative group p-3.5 bg-midnight/90 text-powderBlue rounded-full shadow-2xl border border-powderBlue/50 hover:bg-steelBlue transition-all duration-300 hover:scale-110 flex items-center justify-center card-aura-glow" id="musicToggleBtn">
+<div class="absolute inset-1 rounded-full border border-dashed border-powderBlue/40 animate-spin-slow pointer-events-none" id="musicVinylRing"></div>
+<div class="flex items-end gap-0.5 mr-2 h-4" id="audioEqualizer">
+<span class="w-1 bg-powderBlue rounded-full eq-bar-1 inline-block"></span>
+<span class="w-1 bg-white rounded-full eq-bar-2 inline-block"></span>
+<span class="w-1 bg-powderBlue rounded-full eq-bar-3 inline-block"></span>
+</div>
+<svg class="w-5 h-5 fill-current block relative z-10 transition-transform group-hover:scale-110" id="musicIconPlay" viewbox="0 0 24 24">
+<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path>
+</svg>
+</button>
+</aside>
+<!-- END: Audio Controller Widget -->
+<!-- BEGIN: Hero Cover Section -->
+<header class="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden bg-gradient-to-b from-midnight via-[#183a66] to-steelBlue text-white" id="cover" style='background-image: linear-gradient(rgba(17, 36, 68, 0.78), rgba(17, 47, 88, 0.72), rgba(15, 23, 42, 0.88)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuC46r7rxCUNSMdVXC24XhhjxXNilDumZZ3RuFkZi3A8ImjyxUzWsa9GdxREIS7d0QXSY2cRrv6EW8xlOTXGjZHrCSzv4__z4jNEchYJlTmMsqOBGn4fQpZhwD-DCY2hG1zr1hWtXfXN_1aUkovBMKobnFtLipgwMbd7jxMtcv5dI_QTlt2WT-Zq32aLcztrT4yyX_N3RpCnTVkJuNmtvF9QhyEkRR6XC5xBth1BliklenayEEhSRByl-w"); background-size: cover; background-position: center 25%; background-repeat: no-repeat;'>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-powderBlue/25 via-transparent to-black/50"></div>
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-powderBlue/20 rounded-full blur-3xl animate-pulse"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-cornflower/25 rounded-full blur-3xl animate-pulse"></div>
+<div class="absolute w-[500px] h-[500px] rounded-full border border-powderBlue/20 border-dashed animate-spin-slow pointer-events-none hidden md:block"></div>
+<div class="absolute w-[620px] h-[620px] rounded-full border border-white/10 pointer-events-none hidden md:block"></div>
+<div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center py-16 animate-soft-float">
+<div class="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-powderBlue/50 bg-midnight/70 backdrop-blur-md text-powderBlue text-xs uppercase tracking-widest mb-6 shadow-lg">
+<span class="w-2 h-2 rounded-full bg-powderBlue animate-ping"></span>
+<span>The Wedding Celebration</span>
+</div>
+<p class="font-serifHeading tracking-[0.3em] text-sm uppercase text-iceBlue mb-3 drop-shadow">Walimatul 'Ursy</p>
+<h1 class="font-script text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-powderBlue to-white my-3 drop-shadow-lg tracking-wide hover:scale-105 transition-transform duration-700">
+        Mutiara &amp; Daffa
+      </h1>
+<p class="font-light text-slate-200 max-w-xl mx-auto text-sm md:text-base leading-relaxed my-4 italic drop-shadow-sm">
+        "Dan diantara tanda-tanda kekuasaan-Nya adalah diciptakannya untukmu pasangan hidup dari jenismu sendiri supaya kamu merasa tentram disampingnya dan dijadikannya kasih sayang diantara kamu. Sesungguhnya yang demikian itu menjadi tanda kebesaran Allah bagi orang yang berpikir"
+        <span class="block text-xs not-italic text-powderBlue mt-2 font-serifHeading tracking-wider">(QS. Ar Ruum : 21)</span>
+</p>
+<!-- Countdown Component with Neon Aura -->
+<div class="grid grid-cols-4 gap-2.5 md:gap-4 my-8 text-center w-full max-w-md" data-purpose="countdown-container">
+<div class="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+<span class="block text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue transition-all duration-300 drop-shadow" id="days">25</span>
+<span class="text-[10px] md:text-xs tracking-wider uppercase text-iceBlue font-medium">Hari</span>
+</div>
+<div class="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+<span class="block text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue transition-all duration-300 drop-shadow" id="hours">20</span>
+<span class="text-[10px] md:text-xs tracking-wider uppercase text-iceBlue font-medium">Jam</span>
+</div>
+<div class="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+<span class="block text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue transition-all duration-300 drop-shadow" id="minutes">27</span>
+<span class="text-[10px] md:text-xs tracking-wider uppercase text-iceBlue font-medium">Menit</span>
+</div>
+<div class="glass-card-dark p-3.5 rounded-2xl border border-powderBlue/40 shadow-lg hover:border-powderBlue transition">
+<span class="block text-2xl md:text-3xl font-bold font-serifHeading text-powderBlue transition-all duration-300 drop-shadow" id="seconds">12</span>
+<span class="text-[10px] md:text-xs tracking-wider uppercase text-iceBlue font-medium">Detik</span>
+</div>
+</div>
+<!-- Action Button to scroll down -->
+<a class="btn-interactive pulse-glow mt-4 inline-flex items-center gap-3 px-8 py-3.5 bg-gradient-to-r from-steelBlue to-midnight border border-powderBlue/70 text-white rounded-full font-medium tracking-wide shadow-2xl hover:scale-105 active:scale-95" href="#couple">
+<svg class="w-5 h-5 fill-current text-powderBlue animate-bounce" viewbox="0 0 20 20">
+<path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+<path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+</svg>
+<span class="tracking-wider">Buka Undangan</span>
+</a>
+</div>
+<!-- Decorative Bottom Divider Wave -->
+<div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#f4f8fc] to-transparent"></div>
+</header>
+<!-- END: Hero Cover Section -->
+<main class="relative z-10">
+<!-- BEGIN: Couple Profile Section -->
+<section class="py-24 px-4 max-w-6xl mx-auto relative overflow-hidden" id="couple">
+<!-- Section Wind Breeze Botanical Ornaments (Left & Right) -->
+<div aria-hidden="true" class="absolute -left-12 top-16 w-36 md:w-48 opacity-45 pointer-events-none animate-floral-left">
+<svg class="w-full h-auto text-steelBlue" fill="none" viewbox="0 0 100 100">
+<path d="M10 90 Q30 40 85 20 Q50 65 10 90" fill="#A2BEE2" fill-opacity="0.3"></path>
+<path d="M15 85 C35 60 65 50 80 25 C60 50 40 75 15 85 Z" fill="#fbcfe8" fill-opacity="0.4"></path>
+<circle cx="85" cy="20" fill="#e3be77" r="4"></circle>
+</svg>
+</div>
+<div aria-hidden="true" class="absolute -right-12 bottom-12 w-36 md:w-48 opacity-45 pointer-events-none animate-floral-right">
+<svg class="w-full h-auto text-steelBlue" fill="none" viewbox="0 0 100 100">
+<path d="M90 90 Q70 40 15 20 Q50 65 90 90" fill="#8fa8cf" fill-opacity="0.3"></path>
+<path d="M85 85 C65 60 35 50 20 25 C40 50 60 75 85 85 Z" fill="#fbcfe8" fill-opacity="0.4"></path>
+<circle cx="15" cy="20" fill="#A2BEE2" r="4"></circle>
+</svg>
+</div>
+<div class="text-center mb-16 reveal-item">
+<p class="text-xs md:text-sm font-semibold tracking-widest text-steelBlue uppercase">Maha suci Allah SWT, yang telah menciptakan makhluk-Nya berpasang-pasangan</p>
+<h2 class="font-serifHeading text-3xl md:text-4xl text-midnight font-bold mt-2">Mempelai Bahagia</h2>
+<div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-4 rounded-full"></div>
+<p class="max-w-xl mx-auto text-slate-600 text-sm mt-3">
+  Ya Allah, perkenankanlah pernikahan putra-putri kami:
+</p>
+</div>
+<div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+<!-- Bride Card (Mutiara) with Shimmer Border Wrapper & Pulsing Rings -->
+<div class="reveal-item">
+<div class="p-[1.5px] rounded-3xl shimmer-border-box shadow-xl animate-card-float">
+<article class="glass-card card-aura-glow rounded-3xl p-8 text-center relative overflow-hidden group">
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-powderBlue/25 rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-all duration-700"></div>
+<div class="relative w-48 h-48 mx-auto mb-6">
+<!-- Dual Glowing Dynamic Aura Rings -->
+<div class="absolute -inset-3 rounded-full avatar-glow-ring pointer-events-none"></div>
+<div class="absolute inset-0 rounded-full border-2 border-dashed border-steelBlue animate-spin-slow"></div>
+<div class="absolute -inset-1 rounded-full border border-powderBlue/60 animate-spin-reverse"></div>
+<img alt="Mutiara Afdelani" class="relative z-10 w-full h-full object-cover rounded-full p-2.5 shadow-md group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABCQhCvTIjgWwA4BlyDBc7wzMC9hEQcLs45mx-D_0uVK4NLTSMDtm1-b_QXJSQG69Qf1JNKpoX9lmiywxscrItveLKdmKLVaia0R0Y-RpRXkSM5pkSv5jMK_uTR1kl4_lUtieXkAC-HAe8H2w9Q4ynHuK7yMYdiFR_32pYd7mbQ32-deR0QAB3oq3pphUQ7hczOfnH3m8E4tq9GnfH3VeGHLy1NyzfxlAfWgxdxbWL0H0fIyN6YYcAyw" style="object-fit: cover; object-position: center center;"/>
+</div>
+<h3 class="font-serifHeading text-2xl font-bold text-midnight group-hover:text-steelBlue transition-colors">Mutiara Afdelani</h3>
+<p class="text-xs uppercase tracking-wider text-steelBlue font-semibold mt-1">Putri Kedua dari</p>
+<p class="text-sm font-medium text-slate-700 mt-1">Bpk. Syafridel &amp; Ibu Nofrianetis</p>
+<p class="text-xs text-slate-500 mt-2 italic">Perum Parahiyangan Kencana Blok E26 No.9</p>
+<div class="flex justify-center gap-3 mt-6">
+<a aria-label="Instagram Mutiara" class="btn-interactive p-2.5 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm" href="#">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</article>
+</div>
+</div>
+<!-- Groom Card (Daffa) with Shimmer Border Wrapper & Pulsing Rings -->
+<div class="reveal-item">
+<div class="p-[1.5px] rounded-3xl shimmer-border-box shadow-xl animate-card-float" style="animation-delay: 1.5s;">
+<article class="glass-card card-aura-glow rounded-3xl p-8 text-center relative overflow-hidden group">
+<div class="absolute -top-12 -left-12 w-32 h-32 bg-steelBlue/25 rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-all duration-700"></div>
+<div class="relative w-48 h-48 mx-auto mb-6">
+<!-- Dual Glowing Dynamic Aura Rings -->
+<div class="absolute -inset-3 rounded-full avatar-glow-ring pointer-events-none" style="animation-delay: 1s;"></div>
+<div class="absolute inset-0 rounded-full border-2 border-dashed border-cornflower animate-spin-slow"></div>
+<div class="absolute -inset-1 rounded-full border border-steelBlue/60 animate-spin-reverse"></div>
+<img alt="Foto Daffa Aria Gunawan" class="relative z-10 w-full h-full object-cover rounded-full p-2.5 shadow-md group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYQRBYQo2djIeByydCGNk9r5K2jOAamzl6hpwZUN2dtW5jlU-WJ_NH_5MVIxbnwdKfxM5jmNg4yIfTd5qtkYPTgNWnEDnY9vKE2y2B7S6PpnqOaTBfHGKJMAniE1U1ezGnqMKVVWubKN7YNBDmL4Glr61EWDxeo-UWqhIY4eaEocDmoQ3HWbKBSmgblNUkyXULyApUiyquYVtH6RDrSBZ57DSBdUKmdVTJHN8xEji6mAwaf0XiLib4Rw"/>
+</div>
+<h3 class="font-serifHeading text-2xl font-bold text-midnight group-hover:text-steelBlue transition-colors">Daffa Aria Gunawan</h3>
+<p class="text-xs uppercase tracking-wider text-steelBlue font-semibold mt-1">Putra Pertama dari</p>
+<p class="text-sm font-medium text-slate-700 mt-1">Bpk. Iwan Gunawan &amp; Ibu Aneu Anggraeni</p>
+<p class="text-xs text-slate-500 mt-2 italic">Kp. Gantungan No.7, RT.002 RW.022, Cimenyan, Kec. Cimenyan</p>
+<div class="flex justify-center gap-3 mt-6">
+<a aria-label="Instagram Daffa" class="btn-interactive p-2.5 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm" href="#">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</article>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Couple Profile Section -->
+<!-- BEGIN: Love Story Timeline Section -->
+<section class="py-20 bg-gradient-to-b from-[#f4f8fc] via-softSky/60 to-[#f4f8fc] px-4 relative overflow-hidden">
+<!-- Swaying Botanical Vector Overlay on Edges -->
+<div aria-hidden="true" class="absolute -left-8 top-1/4 w-32 md:w-44 opacity-40 pointer-events-none animate-floral-left">
+<svg class="w-full h-auto" fill="none" viewbox="0 0 120 120">
+<path d="M0 60 C30 20 70 30 110 10 C80 50 60 90 0 60 Z" fill="#A2BEE2" fill-opacity="0.35"></path>
+<circle cx="110" cy="10" fill="#fbcfe8" r="5"></circle>
+</svg>
+</div>
+<div aria-hidden="true" class="absolute -right-8 top-1/2 w-32 md:w-44 opacity-40 pointer-events-none animate-floral-right">
+<svg class="w-full h-auto" fill="none" viewbox="0 0 120 120">
+<path d="M120 60 C90 20 50 30 10 10 C40 50 60 90 120 60 Z" fill="#8fa8cf" fill-opacity="0.35"></path>
+<circle cx="10" cy="10" fill="#e3be77" r="5"></circle>
+</svg>
+</div>
+<div class="max-w-4xl mx-auto">
+<div class="text-center mb-16 reveal-item">
+<p class="text-sm font-semibold tracking-widest text-steelBlue uppercase">Perjalanan Kasih</p>
+<h2 class="font-serifHeading text-3xl font-bold text-midnight">Kisah Cinta Kami</h2>
+<div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3"></div>
+</div>
+<!-- Timeline with Flowing Shimmer Light Beam -->
+<div class="relative border-l-2 border-powderBlue/70 ml-4 md:ml-32 space-y-12">
+<div class="timeline-shimmer-beam"></div>
+<!-- Story Event 1 -->
+<div class="relative pl-8 group reveal-item">
+<span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-steelBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300 animate-ping opacity-75"></span>
+<span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-steelBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300"></span>
+<div class="glass-card card-aura-glow p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+<span class="text-xs font-semibold text-cornflower uppercase tracking-wider">Awal Bertemu</span>
+<h4 class="font-serifHeading text-lg font-bold text-midnight mt-1">Pertemuan Pertama</h4>
+<p class="text-slate-600 text-sm mt-2 leading-relaxed">
+  Pertemuan berharga yang membuka lembaran persahabatan hangat, berbagi cerita, impian, dan saling mengenal satu sama lain dengan penuh kebaikan.
+</p>
+</div>
+</div>
+<!-- Story Event 2 -->
+<div class="relative pl-8 group reveal-item">
+<span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-powderBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300 animate-ping opacity-75" style="animation-delay: 1.2s;"></span>
+<span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-powderBlue border-4 border-white shadow group-hover:scale-125 transition-transform duration-300"></span>
+<div class="glass-card card-aura-glow p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+<span class="text-xs font-semibold text-cornflower uppercase tracking-wider">Komitmen Hati</span>
+<h4 class="font-serifHeading text-lg font-bold text-midnight mt-1">Menjalin Hubungan</h4>
+<p class="text-slate-600 text-sm mt-2 leading-relaxed">
+  Dengan restu keluarga dan ketetapan hati, kami meyakinkan diri untuk melangkah ke jenjang yang lebih serius dalam ikatan suci pernikahan.
+</p>
+</div>
+</div>
+<!-- Story Event 3 -->
+<div class="relative pl-8 group reveal-item">
+<span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-midnight border-4 border-white shadow group-hover:scale-125 transition-transform duration-300 animate-ping opacity-75" style="animation-delay: 2s;"></span>
+<span class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-midnight border-4 border-white shadow group-hover:scale-125 transition-transform duration-300"></span>
+<div class="glass-card card-aura-glow p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+<span class="text-xs font-semibold text-cornflower uppercase tracking-wider">Menuju Halal</span>
+<h4 class="font-serifHeading text-lg font-bold text-midnight mt-1">Menuju Hari Bahagia</h4>
+<p class="text-slate-600 text-sm mt-2 leading-relaxed">
+  Menyatukan dua keluarga besar dalam doa dan harapan agar bahtera rumah tangga kami senantiasa diberkahi sakinah, mawaddah, warahmah.
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Love Story Timeline Section -->
+<!-- BEGIN: Events Schedule Section -->
+<section class="py-24 px-4 max-w-5xl mx-auto relative overflow-hidden" id="events">
+<!-- Swaying Botanical Vector Side Accents -->
+<div aria-hidden="true" class="absolute -left-12 top-20 w-40 opacity-40 pointer-events-none animate-floral-left">
+<svg fill="none" viewbox="0 0 100 100">
+<path d="M0 20 Q40 40 70 90 Q30 70 0 20" fill="#fbcfe8" fill-opacity="0.45"></path>
+<path d="M10 10 Q60 30 80 80" stroke="#8fa8cf" stroke-dasharray="2 3" stroke-width="1.5"></path>
+</svg>
+</div>
+<div aria-hidden="true" class="absolute -right-12 bottom-20 w-40 opacity-40 pointer-events-none animate-floral-right">
+<svg fill="none" viewbox="0 0 100 100">
+<path d="M100 20 Q60 40 30 90 Q70 70 100 20" fill="#A2BEE2" fill-opacity="0.45"></path>
+<path d="M90 10 Q40 30 20 80" stroke="#416788" stroke-dasharray="2 3" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="text-center mb-16 reveal-item">
+<p class="text-sm font-semibold tracking-widest text-steelBlue uppercase">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+<h2 class="font-serifHeading text-3xl md:text-4xl font-bold text-midnight mt-1">Waktu &amp; Tempat Acara</h2>
+<div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3"></div>
+<p class="max-w-2xl mx-auto text-slate-600 text-sm mt-4 leading-relaxed">
+  Dengan memohon Rahmat dan Ridho Allah SWT, kami bermaksud menyelenggarakan Resepsi Pernikahan putra-putri kami yang Insya Allah akan dilaksanakan pada :
+</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8 mb-12">
+<!-- Akad Nikah Card -->
+<div class="reveal-item">
+<div class="p-[1.5px] rounded-3xl shimmer-border-box shadow-lg h-full">
+<div class="glass-card card-aura-glow rounded-3xl p-8 text-center flex flex-col justify-between h-full group">
+<div>
+<div class="w-16 h-16 bg-softSky rounded-full flex items-center justify-center mx-auto mb-4 text-midnight group-hover:scale-110 transition-transform duration-300 shadow-inner animate-soft-float">
+<svg class="w-7 h-7 fill-current" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+</div>
+<h3 class="font-serifHeading text-2xl font-bold text-midnight mb-2">Akad Nikah</h3>
+<p class="text-steelBlue font-bold text-base mb-4 tracking-wide uppercase">MINGGU, 13 Desember 2026</p>
+<div class="text-slate-600 text-sm space-y-2 mb-6 border-y border-powderBlue/40 py-4">
+<p><strong>Pukul:</strong> 10.00 WIB s/d selesai</p>
+<p><strong>Tempat:</strong> Wisma Karya RW 06</p>
+<p class="text-xs text-slate-500 font-medium">Jl. Ibu Inggit Garnasih Gg. Tegallega No.44a, Bandung Kota, 40252, Jawa Barat</p>
+</div>
+</div>
+<a class="btn-interactive inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-midnight text-white text-xs font-semibold shadow-md w-full" href="https://maps.google.com/?q=Wisma+Karya+RW+06+Jl.+Ibu+Inggit+Garnasih+Gg.+Tegallega+No.44a+Bandung" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current text-powderBlue" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+<span>Buka Google Maps</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Resepsi Card -->
+<div class="reveal-item">
+<div class="p-[1.5px] rounded-3xl shimmer-border-box shadow-lg h-full">
+<div class="glass-card card-aura-glow rounded-3xl p-8 text-center flex flex-col justify-between h-full group">
+<div>
+<div class="w-16 h-16 bg-softSky rounded-full flex items-center justify-center mx-auto mb-4 text-steelBlue group-hover:scale-110 transition-transform duration-300 shadow-inner animate-soft-float" style="animation-delay: 1.5s;">
+<svg class="w-7 h-7 fill-current" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+</div>
+<h3 class="font-serifHeading text-2xl font-bold text-midnight mb-2">Resepsi Pernikahan</h3>
+<p class="text-steelBlue font-bold text-base mb-4 tracking-wide uppercase">MINGGU, 13 Desember 2026</p>
+<div class="text-slate-600 text-sm space-y-2 mb-6 border-y border-powderBlue/40 py-4">
+<p><strong>Pukul:</strong> 11.00 WIB s/d 19.00 WIB</p>
+<p><strong>Tempat:</strong> Wisma Karya RW 06</p>
+<p class="text-xs text-slate-500 font-medium">Jl. Ibu Inggit Garnasih Gg. Tegallega No.44a, Bandung Kota, 40252, Jawa Barat</p>
+</div>
+</div>
+<a class="btn-interactive inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-steelBlue text-white text-xs font-semibold shadow-md w-full" href="https://maps.google.com/?q=Wisma+Karya+RW+06+Jl.+Ibu+Inggit+Garnasih+Gg.+Tegallega+No.44a+Bandung" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current text-powderBlue" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+<span>Buka Google Maps</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Denah Lokasi & Map with Radar Sonar Pulse Pin -->
+<div class="reveal-item">
+<div class="glass-card card-aura-glow rounded-3xl p-6 md:p-8 border border-powderBlue/50 text-center max-w-2xl mx-auto shadow-md">
+<div class="w-14 h-14 bg-midnight/10 text-midnight rounded-full flex items-center justify-center mx-auto mb-3 animate-soft-float">
+<svg class="w-7 h-7 fill-current" viewbox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 2h2v3h-2v-3zm3 3h3v3h-3v-3zm-5 1h2v2h-2v-2zm3-3h2v2h-2v-2z"></path></svg>
+</div>
+<h4 class="font-serifHeading text-lg font-bold text-midnight mb-1">Denah &amp; Panduan Navigasi Lokasi</h4>
+<p class="text-xs md:text-sm text-slate-600 mb-4 max-w-md mx-auto">
+      Gunakan Google Maps untuk mendapatkan arahan rute langsung menuju lokasi acara di Wisma Karya RW 06 Bandung.
+    </p>
+<!-- Map Container with Sonar Pulsing Pin Indicator -->
+<div class="w-full h-72 md:h-80 rounded-2xl overflow-hidden shadow-inner border border-powderBlue/40 my-4 relative">
+<!-- Radar Sonar Pulse Overlay -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none flex items-center justify-center">
+<span class="absolute w-12 h-12 rounded-full bg-steelBlue/30 sonar-radar-ring"></span>
+<span class="absolute w-20 h-20 rounded-full bg-powderBlue/25 sonar-radar-ring" style="animation-delay: 0.8s;"></span>
+<span class="w-5 h-5 rounded-full bg-midnight border-2 border-white shadow-lg flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-powderBlue animate-ping"></span>
+</span>
+</div>
+<iframe allowfullscreen="" height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=-6.93239335,107.60615168&amp;hl=id&amp;z=16&amp;output=embed" style="border:0;" width="100%"></iframe>
+</div>
+<div class="inline-flex flex-wrap items-center justify-center gap-3">
+<a class="btn-interactive inline-flex items-center gap-2 px-6 py-3 bg-midnight text-white text-xs font-semibold rounded-full shadow-md" href="https://maps.google.com/?q=Wisma+Karya+RW+06+Jl.+Ibu+Inggit+Garnasih+Gg.+Tegallega+No.44a+Bandung" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current text-powderBlue" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+<span>Buka Google Maps - Wisma Karya RW 06 Bandung</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Events Schedule Section -->
+<!-- BEGIN: Digital Envelope / Wedding Gift Section -->
+<section class="py-24 px-4 max-w-4xl mx-auto relative overflow-hidden">
+<!-- Swaying Botanical Side Element -->
+<div aria-hidden="true" class="absolute -right-6 top-16 w-32 opacity-40 pointer-events-none animate-floral-right">
+<svg fill="none" viewbox="0 0 100 100">
+<path d="M10 10 Q80 40 80 90 Q30 60 10 10" fill="#fbcfe8" fill-opacity="0.4"></path>
+<circle cx="80" cy="90" fill="#e3be77" r="4"></circle>
+</svg>
+</div>
+<div class="text-center mb-16 reveal-item">
+<p class="text-sm font-semibold tracking-widest text-steelBlue uppercase">Tanda Kasih</p>
+<h2 class="font-serifHeading text-3xl font-bold text-midnight">Amplop Digital</h2>
+<div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3"></div>
+<p class="max-w-lg mx-auto text-slate-600 text-sm mt-3">
+  Doa restu Anda merupakan hadiah terindah bagi kami. Namun jika berkenan memberikan tanda kasih, Anda dapat menyalurkannya melalui rekening berikut:
+</p>
+</div>
+<div class="gap-6 max-w-md mx-auto flex justify-center reveal-item">
+<!-- Bank Card with Shimmer Border and Floating Ambient -->
+<div class="w-full p-[1.5px] rounded-3xl shimmer-border-box shadow-xl animate-card-float">
+<div class="glass-card card-aura-glow p-8 rounded-3xl text-center w-full relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-24 h-24 bg-powderBlue/25 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-all"></div>
+<div class="h-10 flex items-center justify-center font-bold text-xl text-midnight tracking-wider">
+        Sea Bank
+      </div>
+<p class="text-xs text-slate-500 mt-2">Nomor Rekening:</p>
+<div class="relative inline-block my-2">
+<p class="font-serifHeading text-2xl font-bold text-midnight tracking-wider" id="rekeningMandiri">901410146994</p>
+<span class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent"></span>
+</div>
+<p class="text-xs text-slate-600 mb-5 font-medium">a.n. Daffa Aria Gunawan</p>
+<button class="btn-interactive inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-softSky via-white to-softSky text-steelBlue border border-powderBlue/50 rounded-full text-xs font-semibold hover:text-midnight transition shadow-md hover:scale-105" onclick="copyToClipboard('901410146994', 'Sea Bank Daffa')">
+<svg class="w-4 h-4 fill-current text-steelBlue" viewbox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg>
+<span>Salin No. Rekening</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Toast Feedback Notification -->
+<div class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-midnight text-white text-xs px-6 py-3 rounded-full shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 border border-powderBlue/40" id="copyToast">
+  Nomor rekening berhasil disalin!
+</div>
+</section>
+<!-- END: Digital Envelope / Wedding Gift Section -->
+<!-- BEGIN: RSVP & Wishes Section -->
+<section class="py-24 bg-gradient-to-b from-[#f4f8fc] to-softSky px-4 relative overflow-hidden">
+<!-- Swaying Botanical Side Element -->
+<div aria-hidden="true" class="absolute -left-10 bottom-16 w-36 opacity-35 pointer-events-none animate-floral-left">
+<svg fill="none" viewbox="0 0 100 100">
+<path d="M0 50 Q50 20 80 80 Q30 90 0 50" fill="#A2BEE2" fill-opacity="0.4"></path>
+</svg>
+</div>
+<div class="max-w-4xl mx-auto">
+<div class="text-center mb-12 reveal-item">
+<p class="text-sm font-semibold tracking-widest text-steelBlue uppercase">Konfirmasi &amp; Harapan</p>
+<h2 class="font-serifHeading text-3xl font-bold text-midnight">RSVP &amp; Doa Restu</h2>
+<div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-powderBlue to-transparent mx-auto mt-3"></div>
+</div>
+<div class="grid md:grid-cols-2 gap-8 items-start">
+<!-- RSVP Form with Shimmer Border -->
+<div class="reveal-item">
+<div class="p-[1px] rounded-3xl shimmer-border-box shadow-md">
+<div class="glass-card card-aura-glow p-6 md:p-8 rounded-3xl shadow-sm">
+<h3 class="font-serifHeading text-lg font-bold text-midnight mb-4 flex items-center gap-2">
+<span>Konfirmasi Kehadiran</span>
+<span class="w-2 h-2 rounded-full bg-powderBlue animate-ping"></span>
+</h3>
+<form class="space-y-4" id="rsvpForm">
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1" for="guestName">Nama Lengkap</label>
+<input class="w-full text-sm rounded-xl border-slate-200 focus:border-steelBlue focus:ring-steelBlue transition bg-white/90" id="guestName" placeholder="Contoh: Dimas Aditya" required="" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1" for="attendanceStatus">Status Kehadiran</label>
+<select class="w-full text-sm rounded-xl border-slate-200 focus:border-steelBlue focus:ring-steelBlue transition bg-white/90" id="attendanceStatus">
+<option value="Hadir">Saya akan Hadir</option>
+<option value="Tidak Hadir">Mohon Maaf Tidak Dapat Hadir</option>
+<option value="Ragu-ragu">Masih Belum Pasti</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1" for="guestMessage">Ucapan &amp; Doa Restu</label>
+<textarea class="w-full text-sm rounded-xl border-slate-200 focus:border-steelBlue focus:ring-steelBlue transition bg-white/90" id="guestMessage" placeholder="Tuliskan pesan &amp; doa hangat..." required="" rows="3"></textarea>
+</div>
+<button class="btn-interactive w-full py-3 bg-midnight text-white text-sm font-semibold rounded-xl shadow-md" type="submit">
+        Kirim Konfirmasi
+      </button>
+</form>
+</div>
+</div>
+</div>
+<!-- Dynamic Wishes Feed with Live Counter -->
+<div class="reveal-item">
+<div class="p-[1px] rounded-3xl shimmer-border-box shadow-md">
+<div class="glass-card card-aura-glow p-6 md:p-8 rounded-3xl shadow-sm flex flex-col h-[480px]">
+<h3 class="font-serifHeading text-lg font-bold text-midnight mb-4 flex items-center justify-between">
+<span>Doa dari Sahabat</span>
+<span class="text-xs bg-powderBlue/40 text-midnight px-3 py-1 rounded-full font-sans font-semibold transition-all duration-300" id="wishesCount">3 Ucapan</span>
+</h3>
+<div class="flex-1 overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-powderBlue" id="wishesContainer">
+<!-- Initial Comment 1 -->
+<div class="p-3.5 rounded-2xl bg-white/85 border border-powderBlue/30 hover:border-powderBlue transition transform hover:translate-x-1 duration-300 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-bold text-xs text-midnight">Bagas &amp; Riana</span>
+<span class="text-[10px] text-slate-400">Baru saja</span>
+</div>
+<p class="text-xs text-slate-600 mt-1 leading-relaxed">Selamat Mutiara &amp; Daffa! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah selamanya.</p>
+</div>
+<!-- Initial Comment 2 -->
+<div class="p-3.5 rounded-2xl bg-white/85 border border-powderBlue/30 hover:border-powderBlue transition transform hover:translate-x-1 duration-300 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-bold text-xs text-midnight">Fadhil Ramadhan</span>
+<span class="text-[10px] text-slate-400">1 jam lalu</span>
+</div>
+<p class="text-xs text-slate-600 mt-1 leading-relaxed">Barakallah bro Daffa &amp; Mutiara! Lancar terus sampai hari H ya, selamat berbahagia.</p>
+</div>
+<!-- Initial Comment 3 -->
+<div class="p-3.5 rounded-2xl bg-white/85 border border-powderBlue/30 hover:border-powderBlue transition transform hover:translate-x-1 duration-300 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-bold text-xs text-midnight">Nadia Safitri</span>
+<span class="text-[10px] text-slate-400">3 jam lalu</span>
+</div>
+<p class="text-xs text-slate-600 mt-1 leading-relaxed">Mutiara cantik sekali! Happy wedding yaa, langgeng sampai kakek nenek!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: RSVP & Wishes Section -->
+</main>
+<!-- BEGIN: Footer Section -->
+<footer class="bg-midnight text-white text-center py-12 px-4 border-t border-powderBlue/20 relative z-10">
+<div class="max-w-lg mx-auto">
+<h4 class="font-script text-4xl text-powderBlue mb-3 drop-shadow">Mutiara &amp; Daffa</h4>
+<p class="text-xs text-iceBlue/90 mb-3 font-light leading-relaxed">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan do'a restu kepada kedua mempelai.</p>
+<p class="text-xs text-powderBlue font-semibold uppercase tracking-wider mb-2">Wassalamualaikum Warahmatullahi Wabarakatuh</p>
+<p class="text-[11px] text-slate-400 italic mb-6">Mohon maaf apabila ada kesalahan dalam penulisan nama/gelar</p>
+<div class="w-16 h-px bg-powderBlue/30 mx-auto mb-6"></div>
+<p class="text-[11px] text-slate-400 tracking-wider uppercase">© 2026 Mutiara &amp; Daffa Wedding. All Rights Reserved.</p>
+</div>
+</footer>
+<!-- END: Footer Section -->
+<!-- BEGIN: Dynamic Falling Petals & Fairy Sparkles Continuous Canvas Animation -->
+<script data-purpose="floating-petals-canvas">
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('petals-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      // Mouse interactive breeze tracking
+      let mouse = { x: -1000, y: -1000, vx: 0, vy: 0, lastX: 0, lastY: 0 };
+      
+      window.addEventListener('mousemove', (e) => {
+        mouse.vx = (e.clientX - mouse.lastX) * 0.15;
+        mouse.vy = (e.clientY - mouse.lastY) * 0.15;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouse.lastX = e.clientX;
+        mouse.lastY = e.clientY;
+      });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          mouse.x = e.touches[0].clientX;
+          mouse.y = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      // Palette: Soft Rose Petals, Periwinkle Blue, Ice Blossom & White Blush
+      const petalColors = [
+        { r: 251, g: 207, b: 232, type: 'pink' },       // soft pink blush (#fbcfe8)
+        { r: 244, g: 182, b: 209, type: 'pink' },       // romantic rose bud
+        { r: 162, g: 190, b: 226, type: 'blue' },       // powder blue (#A2BEE2)
+        { r: 143, g: 168, b: 207, type: 'periwinkle' }, // periwinkle (#8fa8cf)
+        { r: 219, g: 234, b: 254, type: 'iceBlue' },    // ice blue (#dbeafe)
+        { r: 255, g: 255, b: 255, type: 'white' }       // pure white blossom
+      ];
+
+      const TOTAL_PETALS = Math.min(80, Math.floor(window.innerWidth / 18));
+      const TOTAL_SPARKLES = 45;
+
+      // Petal Class with depth, realistic curved petal shape, 3D flip & wind interaction
+      class Petal {
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(initial = false) {
+          this.x = Math.random() * (width + 120) - 60;
+          this.y = initial ? Math.random() * height : -40;
+          this.depth = Math.random(); // 0 (far) to 1 (near foreground)
+          this.size = (Math.random() * 14 + 10) * (0.65 + this.depth * 0.6);
+          this.color = petalColors[Math.floor(Math.random() * petalColors.length)];
+          this.opacity = (Math.random() * 0.45 + 0.45) * (0.65 + this.depth * 0.35);
+          this.speedY = (Math.random() * 1.3 + 0.75) * (0.7 + this.depth * 0.5);
+          this.speedX = Math.random() * 0.8 - 0.4;
+          this.swayAngle = Math.random() * Math.PI * 2;
+          this.swaySpeed = Math.random() * 0.02 + 0.012;
+          this.swayDistance = Math.random() * 2.4 + 1.0;
+          this.rotation = Math.random() * 360;
+          this.rotationSpeed = (Math.random() - 0.5) * 1.8;
+          this.flip = Math.random() * Math.PI;
+          this.flipSpeed = Math.random() * 0.035 + 0.01;
+          this.curvature = Math.random() * 0.35 + 0.75;
+          this.extraVx = 0;
+          this.extraVy = 0;
+        }
+
+        update() {
+          this.swayAngle += this.swaySpeed;
+          this.flip += this.flipSpeed;
+          this.rotation += this.rotationSpeed;
+
+          // Mouse breeze interaction
+          const dx = this.x - mouse.x;
+          const dy = this.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 140) {
+            const force = (140 - dist) / 140;
+            this.extraVx += (dx / dist) * force * 2.0 + mouse.vx * 0.25;
+            this.extraVy += (dy / dist) * force * 1.4 + mouse.vy * 0.25;
+          }
+
+          this.extraVx *= 0.94;
+          this.extraVy *= 0.94;
+
+          this.x += Math.sin(this.swayAngle) * this.swayDistance + this.speedX + this.extraVx;
+          this.y += this.speedY + this.extraVy;
+
+          if (this.y > height + 40 || this.x < -70 || this.x > width + 70) {
+            this.reset(false);
+          }
+        }
+
+        draw() {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate((this.rotation * Math.PI) / 180);
+          ctx.scale(Math.cos(this.flip), 1);
+
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.bezierCurveTo(
+            -this.size * 0.55 * this.curvature, -this.size * 0.35,
+            -this.size * 0.65, this.size * 0.8,
+            0, this.size
+          );
+          ctx.bezierCurveTo(
+            this.size * 0.65, this.size * 0.8,
+            this.size * 0.55 * this.curvature, -this.size * 0.35,
+            0, 0
+          );
+          ctx.closePath();
+
+          const gradient = ctx.createLinearGradient(0, -this.size * 0.2, 0, this.size);
+          gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`);
+          gradient.addColorStop(0.75, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity * 0.8})`);
+          gradient.addColorStop(1, `rgba(255, 255, 255, ${this.opacity * 0.4})`);
+
+          ctx.fillStyle = gradient;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(0, this.size * 0.1);
+          ctx.quadraticCurveTo(this.size * 0.05, this.size * 0.5, 0, this.size * 0.85);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity * 0.65})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+
+          ctx.restore();
+        }
+      }
+
+      // Sparkle / Fairy Dust particle
+      class Sparkle {
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(initial = false) {
+          this.x = Math.random() * width;
+          this.y = initial ? Math.random() * height : -10;
+          this.size = Math.random() * 2.5 + 0.8;
+          this.speedY = Math.random() * 0.4 + 0.2;
+          this.speedX = (Math.random() - 0.5) * 0.3;
+          this.alpha = Math.random() * 0.7 + 0.3;
+          this.twinkleSpeed = Math.random() * 0.04 + 0.02;
+          this.twinkleVal = Math.random() * Math.PI;
+          this.goldToned = Math.random() > 0.4;
+        }
+
+        update() {
+          this.twinkleVal += this.twinkleSpeed;
+          this.y += this.speedY;
+          this.x += this.speedX + Math.sin(this.twinkleVal * 0.5) * 0.3;
+          if (this.y > height + 10) {
+            this.reset(false);
+          }
+        }
+
+        draw() {
+          const dynamicAlpha = (Math.sin(this.twinkleVal) * 0.5 + 0.5) * this.alpha;
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.fillStyle = this.goldToned ? `rgba(227, 190, 119, ${dynamicAlpha})` : `rgba(162, 190, 226, ${dynamicAlpha})`;
+          
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size * 2);
+          ctx.lineTo(this.size * 0.5, -this.size * 0.5);
+          ctx.lineTo(this.size * 2, 0);
+          ctx.lineTo(this.size * 0.5, this.size * 0.5);
+          ctx.lineTo(0, this.size * 2);
+          ctx.lineTo(-this.size * 0.5, this.size * 0.5);
+          ctx.lineTo(-this.size * 2, 0);
+          ctx.lineTo(-this.size * 0.5, -this.size * 0.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      const petals = Array.from({ length: TOTAL_PETALS }, () => new Petal());
+      const sparkles = Array.from({ length: TOTAL_SPARKLES }, () => new Sparkle());
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < sparkles.length; i++) {
+          sparkles[i].update();
+          sparkles[i].draw();
+        }
+
+        for (let i = 0; i < petals.length; i++) {
+          petals[i].update();
+          petals[i].draw();
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    });
+  </script>
+<!-- END: Dynamic Falling Petals & Fairy Sparkles Animation -->
+<!-- BEGIN: Intersection Observer Scroll Reveal Script -->
+<script data-purpose="scroll-reveal">
+    document.addEventListener('DOMContentLoaded', () => {
+      const revealElements = document.querySelectorAll('.reveal-item');
+      
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      revealElements.forEach(el => observer.observe(el));
+    });
+  </script>
+<!-- END: Intersection Observer Scroll Reveal Script -->
+<!-- BEGIN: Countdown Timer Script with Pulse Glow -->
+<script data-purpose="wedding-countdown">
+    // Target Wedding Date: December 13, 2026
+    const weddingDate = new Date('December 13, 2026 10:00:00').getTime();
+
+    function triggerFlash(el) {
+      if (!el) return;
+      el.classList.add('text-white', 'scale-110');
+      setTimeout(() => {
+        el.classList.remove('text-white', 'scale-110');
+      }, 300);
+    }
+
+    let prevSec = "";
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      if (distance < 0) {
+        document.getElementById('days').innerText = "00";
+        document.getElementById('hours').innerText = "00";
+        document.getElementById('minutes').innerText = "00";
+        document.getElementById('seconds').innerText = "00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      const secStr = String(seconds).padStart(2, '0');
+      const secEl = document.getElementById('seconds');
+      
+      if (prevSec !== secStr) {
+        triggerFlash(secEl);
+        prevSec = secStr;
+      }
+
+      document.getElementById('days').innerText = String(days).padStart(2, '0');
+      document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+      secEl.innerText = secStr;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+<!-- END: Countdown Timer Script -->
+<!-- BEGIN: RSVP Form, Clipboard & Music Script -->
+<script data-purpose="interactive-actions">
+    // Clipboard copy functionality with smooth feedback
+    function copyToClipboard(text, accountName) {
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('copyToast');
+        toast.innerText = `Nomor rekening ${accountName} berhasil disalin! ✨`;
+        toast.classList.remove('opacity-0', 'pointer-events-none');
+        toast.classList.add('opacity-100');
+        setTimeout(() => {
+          toast.classList.remove('opacity-100');
+          toast.classList.add('opacity-0', 'pointer-events-none');
+        }, 3200);
+      });
+    }
+
+    // Dynamic RSVP submit handling with animation
+    const rsvpForm = document.getElementById('rsvpForm');
+    const wishesContainer = document.getElementById('wishesContainer');
+    const wishesCount = document.getElementById('wishesCount');
+    let totalWishes = 3;
+
+    rsvpForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('guestName').value.trim();
+      const status = document.getElementById('attendanceStatus').value;
+      const message = document.getElementById('guestMessage').value.trim();
+
+      if (!name || !message) return;
+
+      const newWish = document.createElement('div');
+      newWish.className = "p-3.5 rounded-2xl bg-white/90 border border-powderBlue/40 transform transition-all duration-500 scale-95 opacity-0 shadow-sm";
+      newWish.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-xs text-midnight">${name} <span class="font-normal text-[10px] text-steelBlue">(${status})</span></span>
+          <span class="text-[10px] text-slate-400">Baru saja</span>
+        </div>
+        <p class="text-xs text-slate-600 mt-1 leading-relaxed">${message}</p>
+      `;
+
+      wishesContainer.prepend(newWish);
+      requestAnimationFrame(() => {
+        newWish.classList.remove('scale-95', 'opacity-0');
+        newWish.classList.add('scale-100', 'opacity-100');
+      });
+
+      totalWishes++;
+      wishesCount.innerText = `${totalWishes} Ucapan`;
+      wishesCount.classList.add('scale-110', 'bg-powderBlue');
+      setTimeout(() => {
+        wishesCount.classList.remove('scale-110', 'bg-powderBlue');
+      }, 350);
+
+      rsvpForm.reset();
+    });
+
+    // Simulated music player button toggle with Equalizer Animation
+    const musicBtn = document.getElementById('musicToggleBtn');
+    const vinylRing = document.getElementById('musicVinylRing');
+    const eq = document.getElementById('audioEqualizer');
+    let isPlaying = true;
+
+    musicBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        vinylRing.style.animationPlayState = 'running';
+        eq.style.opacity = '1';
+        musicBtn.classList.add('card-aura-glow');
+      } else {
+        vinylRing.style.animationPlayState = 'paused';
+        eq.style.opacity = '0.3';
+        musicBtn.classList.remove('card-aura-glow');
+      }
+    });
+  </script>
+<!-- END: RSVP Form, Clipboard & Music Script -->
+</body></html>
