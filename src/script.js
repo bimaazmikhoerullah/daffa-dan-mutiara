@@ -3,7 +3,8 @@
  * Single-source local persistence for Doa Restu & Ucapan Tamu.
  */
 
-export const WISHES_STORAGE_KEY = 'wedding_wishes_mutiara_daffa';
+export const WISHES_STORAGE_KEY = 'wedding_wishes_mutiara_daffa_v2';
+const LEGACY_WISHES_STORAGE_KEY = 'wedding_wishes_mutiara_daffa';
 
 const VALID_STATUSES = ['Hadir', 'Tidak Hadir', 'Ragu-ragu'];
 
@@ -82,6 +83,7 @@ export function getWishes() {
   }
 
   try {
+    window.localStorage.removeItem(LEGACY_WISHES_STORAGE_KEY);
     const raw = window.localStorage.getItem(WISHES_STORAGE_KEY);
     if (!raw) {
       return [];

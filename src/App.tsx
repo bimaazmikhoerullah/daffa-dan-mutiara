@@ -5,8 +5,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  clearWishes,
-  deleteWish,
   getWishes,
   renderWishes,
   saveWish,
@@ -95,7 +93,6 @@ export default function App() {
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
   const [newlyAddedId, setNewlyAddedId] = useState<string | null>(null);
-  const [confirmClear, setConfirmClear] = useState(false);
 
   // Initialize YouTube IFrame Player for background music
   useEffect(() => {
@@ -615,7 +612,6 @@ export default function App() {
     const updated = renderWishes(result.wishes);
     setWishes(updated);
     setNewlyAddedId(result.wish.id);
-    setConfirmClear(false);
     setCountPop(true);
     window.setTimeout(() => setCountPop(false), 350);
 
@@ -628,20 +624,6 @@ export default function App() {
     window.setTimeout(() => {
       setFormSuccess('');
     }, 4500);
-  };
-
-  const handleDeleteWish = (id: string) => {
-    const remaining = deleteWish(id);
-    setWishes(renderWishes(remaining));
-    triggerToast('Ucapan dihapus dari penyimpanan lokal.');
-  };
-
-  const handleClearWishes = () => {
-    const cleared = clearWishes();
-    setWishes(renderWishes(cleared));
-    setConfirmClear(false);
-    setNewlyAddedId(null);
-    triggerToast('Seluruh ucapan lokal berhasil dibersihkan.');
   };
 
   return (
@@ -901,17 +883,6 @@ export default function App() {
                   </p>
                   <p className="text-sm font-medium text-slate-700 mt-1">Bpk. Syafridel &amp; Ibu Nofrianetis</p>
                   <p className="text-xs text-slate-500 mt-2 italic">Perum Parahiyangan Kencana Blok E26 No.9</p>
-                  <div className="flex justify-center gap-3 mt-6">
-                    <a
-                      aria-label="Instagram Mutiara"
-                      className="btn-interactive p-3 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center"
-                      href="#"
-                    >
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                      </svg>
-                    </a>
-                  </div>
                 </article>
               </div>
             </div>
@@ -949,17 +920,6 @@ export default function App() {
                   <p className="text-xs text-slate-500 mt-2 italic">
                     Kp. Gantungan No.7, RT.002 RW.022, Cimenyan, Kec. Cimenyan
                   </p>
-                  <div className="flex justify-center gap-3 mt-6">
-                    <a
-                      aria-label="Instagram Daffa"
-                      className="btn-interactive p-3 rounded-full bg-softSky text-steelBlue hover:bg-midnight hover:text-white transition duration-300 shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center"
-                      href="#"
-                    >
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                      </svg>
-                    </a>
-                  </div>
                 </article>
               </div>
             </div>
@@ -1081,7 +1041,7 @@ export default function App() {
                     <p className="text-steelBlue font-bold text-base mb-4 tracking-wide uppercase">MINGGU, 13 Desember 2026</p>
                     <div className="text-slate-600 text-sm space-y-2 mb-6 border-y border-powderBlue/40 py-4">
                       <p>
-                        <strong>Pukul:</strong> 10.00 WIB s/d selesai
+                        <strong>Pukul:</strong> 10.00 WIB s/d 11.00 WIB
                       </p>
                       <p>
                         <strong>Tempat:</strong> Wisma Karya RW 06
@@ -1360,50 +1320,17 @@ export default function App() {
               <div className="reveal-item">
                 <div className="p-[1px] rounded-3xl shimmer-border-box shadow-md">
                   <div className="glass-card card-aura-glow p-5 sm:p-6 md:p-8 rounded-3xl shadow-sm flex flex-col h-[380px] sm:h-[480px]">
-                    <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-                      <h3 className="font-serifHeading text-lg font-bold text-midnight">
-                        Doa dari Sahabat
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        {wishes.length > 0 && (
-                          confirmClear ? (
-                            <div className="flex items-center gap-1.5">
-                              <button
-                                className="px-2.5 py-1 rounded-full bg-rose-600 text-white text-[10px] font-semibold hover:bg-rose-700 transition cursor-pointer"
-                                onClick={handleClearWishes}
-                                type="button"
-                              >
-                                Hapus Semua
-                              </button>
-                              <button
-                                className="px-2.5 py-1 rounded-full bg-slate-200 text-slate-700 text-[10px] font-semibold hover:bg-slate-300 transition cursor-pointer"
-                                onClick={() => setConfirmClear(false)}
-                                type="button"
-                              >
-                                Batal
-                              </button>
-                            </div>
-                          ) : (
-                            <button
-                              aria-label="Hapus semua ucapan lokal"
-                              className="px-2.5 py-1 rounded-full border border-powderBlue/60 text-[10px] font-semibold text-steelBlue hover:bg-softSky hover:text-midnight transition cursor-pointer"
-                              onClick={() => setConfirmClear(true)}
-                              type="button"
-                            >
-                              Bersihkan
-                            </button>
-                          )
-                        )}
-                        <span
-                          className={`text-xs text-midnight px-3 py-1 rounded-full font-sans font-semibold transition-all duration-300 shrink-0 ${
-                            countPop ? 'scale-110 bg-powderBlue' : 'bg-powderBlue/40'
-                          }`}
-                          id="wishesCount"
-                        >
-                          {wishes.length} Ucapan
-                        </span>
-                      </div>
-                    </div>
+                    <h3 className="font-serifHeading text-lg font-bold text-midnight mb-4 flex items-center justify-between gap-2">
+                      <span>Doa dari Sahabat</span>
+                      <span
+                        className={`text-xs text-midnight px-3 py-1 rounded-full font-sans font-semibold transition-all duration-300 shrink-0 ${
+                          countPop ? 'scale-110 bg-powderBlue' : 'bg-powderBlue/40'
+                        }`}
+                        id="wishesCount"
+                      >
+                        {wishes.length} Ucapan
+                      </span>
+                    </h3>
                     <div className="flex-1 overflow-y-auto overscroll-contain space-y-3 pr-1 sm:pr-2 scrollbar-thin scrollbar-thumb-powderBlue" id="wishesContainer">
                       {wishes.length === 0 ? (
                         <div className="h-full flex flex-col items-center justify-center text-center px-4 py-8 rounded-2xl border border-dashed border-powderBlue/70 bg-white/75">
@@ -1432,32 +1359,19 @@ export default function App() {
                               }`}
                             >
                               <div className="flex items-start justify-between gap-2">
-                                <div className="min-w-0">
-                                  <div className="flex flex-wrap items-center gap-1.5">
-                                    <span className="font-bold text-xs text-midnight break-words">
-                                      {wish.name}
-                                    </span>
-                                    {wish.status && (
-                                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-softSky text-steelBlue border border-powderBlue/40">
-                                        {wish.status}
-                                      </span>
-                                    )}
-                                  </div>
-                                  <span className="block text-[10px] text-slate-400 mt-0.5">
-                                    {wish.formattedDate}
+                                <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+                                  <span className="font-bold text-xs text-midnight break-words">
+                                    {wish.name}
                                   </span>
+                                  {wish.status && (
+                                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-softSky text-steelBlue border border-powderBlue/40">
+                                      {wish.status}
+                                    </span>
+                                  )}
                                 </div>
-                                <button
-                                  aria-label={`Hapus ucapan dari ${wish.name}`}
-                                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition shrink-0 cursor-pointer"
-                                  onClick={() => handleDeleteWish(wish.id)}
-                                  title="Hapus ucapan"
-                                  type="button"
-                                >
-                                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                                  </svg>
-                                </button>
+                                <span className="text-[10px] text-slate-400 shrink-0 mt-0.5">
+                                  {wish.formattedDate}
+                                </span>
                               </div>
                               <p className="text-xs text-slate-600 mt-2 leading-relaxed break-words whitespace-pre-line">
                                 {wish.message}
